@@ -46,7 +46,11 @@ public class PowerPlant implements Serializable {
     }
 
     public int getTotalResourcesStored() {
-        return getEnergyResources().stream().mapToInt(Resource::getValue).sum();
+        int sum = 0;
+        for (Resource resource : getEnergyResources()) {
+            sum +=resource.getValue();
+        }
+        return sum;
     }
 
     /**

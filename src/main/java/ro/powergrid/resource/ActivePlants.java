@@ -32,10 +32,10 @@ public class ActivePlants implements Serializable {
     public ActivePlants() {
         plants.add(PowerPlantBuilder.three()); 
         plants.add(PowerPlantBuilder.four());
-        plants.stream().forEach((plant) -> {
+        for (PowerPlant plant : plants) {
             activeResource.add(new ActiveResource(
                 plant.getAcceptableResourceTypes().iterator().next()));
-        });
+        };
     }
     
     public ActiveResource getResource(int position) {
@@ -69,6 +69,7 @@ public class ActivePlants implements Serializable {
      */
     public List<PowerPlant> getPlants() {
         Logger.getLogger(ActivePlants.class.getName()).log(Level.INFO, "Plants: {0}", new Object[]{plants});
+        Logger.getLogger(ActivePlants.class.getName()).log(Level.INFO, "Active: {0}", new Object[]{activeResource});
         return plants;
     }
 }
