@@ -32,4 +32,9 @@ public class PowerPlantBuilder {
         return new PowerPlantBuilder().withBasePrice(3)
                 .withNecessaryResources(2).build();
     }
+    
+    public static PowerPlant four() {
+        return new PowerPlantBuilder().withBasePrice(4)
+                .withNecessaryResources(2).build();
+    }
 }
