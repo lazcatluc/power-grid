@@ -6,7 +6,6 @@
 
 package ro.powergrid.resource;
 
-import ro.powergrid.faces.FacesWrapper;
 
 import java.io.Serializable;
 import java.util.ArrayList;

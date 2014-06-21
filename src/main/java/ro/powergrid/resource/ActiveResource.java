@@ -1,6 +1,5 @@
 package ro.powergrid.resource;
 
-import ro.powergrid.faces.IFaces;
 
 import java.io.Serializable;
 
