@@ -1,21 +1,21 @@
 package ro.powergrid.resource;
 
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
 /**
  * Created by adi on 6/21/14.
  */
-@ManagedBean(name = "activeResource", eager = true)
-@SessionScoped
-public class ActiveResource implements Serializable {
+public class ActiveResource<T extends ResourceType> implements Serializable {
     private static final long serialVersionUID = 1l;
     private int availableResources;
     private Resource resource = Resource.NULL;
+    private final T resourceType;
+    
+    public ActiveResource(T resourceType) {
+        this.resourceType = resourceType;
+    }
     
     public void updatePowerPlantResources() {
-        ResourceType resourceType = new ResourceType("Oil");
         setResource(new Resource(availableResources, resourceType));
     }
 
