@@ -30,20 +30,23 @@ public class ActiveResourceTests {
     }
 
     @Test
-    public void whenUpdatePowerPlantResources_WithoutSettingResource_TheResourceIsInherited(){
-        IFaces faces = mock(IFaces.class);
-        ResourceType initialResourceType = new ResourceType("doesnt matter");
-        int initianResourceAmount = 13;
-        ActiveResource activeResource = new ActiveResource(initialResourceType, faces);
-        activeResource.setAvailableResources(initianResourceAmount);
+    public void whenUpdatePowerPlantResources_ItsResourceIsInherited(){
+        ResourceType initialResourceType = ResourceType.COAL;
+        int initialResourceAmount = 13;
+        ActiveResource activeResource = createActiveResourceWith(initialResourceType, initialResourceAmount);
 
         activeResource.updatePowerPlantResources();
 
         Resource resource = activeResource.getResource();
         assertEquals(initialResourceType, resource.getResourceType());
-        assertEquals(initianResourceAmount, resource.getValue());
+        assertEquals(initialResourceAmount, resource.getValue());
     }
 
+    private ActiveResource createActiveResourceWith(ResourceType initialResourceType, int initianResourceAmount) {
+        ActiveResource activeResource = new ActiveResource(initialResourceType);
+        activeResource.setAvailableResources(initianResourceAmount);
+        return activeResource;
+    }
 
 
     // TODO: Add a test that the resource type gets inherited
