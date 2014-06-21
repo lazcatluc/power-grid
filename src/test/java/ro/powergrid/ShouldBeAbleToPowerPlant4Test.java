@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantBuilder;
-import ro.powergrid.resource.Coal;
 import ro.powergrid.resource.ResourceType;
 
 /**
@@ -32,35 +31,35 @@ public class ShouldBeAbleToPowerPlant4Test {
 
     @Test
     public void powerPlant4NoPoweredWith0Coal() throws Exception {
-    	pp.addEnergyResources(0, new Coal());
+    	pp.addEnergyResources(0, ResourceType.COAL);
     	
     	assertFalse(pp.canPowerCities());
     }
     
     @Test
     public void powerPlant4NoPoweredWith1Coal() throws Exception {
-    	pp.addEnergyResources(1, new Coal());
+    	pp.addEnergyResources(1, ResourceType.COAL);
     	
     	assertFalse(pp.canPowerCities());
     }
 
 	@Test
-    public void powerPlant4CanBePoweredWith2Oil() throws Exception {
-        pp.addEnergyResources(2, ResourceType.OIL);
+    public void powerPlant4CanBePoweredWith2Coal() throws Exception {
+        pp.addEnergyResources(2, ResourceType.COAL);
         
         assertTrue(pp.canPowerCities());
     }
     
     @Test
-    public void powerPlant4CanBePoweredWith3Oil() throws Exception {
-        pp.addEnergyResources(3, ResourceType.OIL);
+    public void powerPlant4CanBePoweredWith3Coal() throws Exception {
+        pp.addEnergyResources(3, ResourceType.COAL);
         
         assertTrue(pp.canPowerCities());
     }
     
     @Test
-    public void powerPlant4CanBePoweredWith4Oil() throws Exception {
-        pp.addEnergyResources(4, new Coal());
+    public void powerPlant4CanBePoweredWith4Coal() throws Exception {
+        pp.addEnergyResources(4, ResourceType.COAL);
         
         assertTrue(pp.canPowerCities());
     }
