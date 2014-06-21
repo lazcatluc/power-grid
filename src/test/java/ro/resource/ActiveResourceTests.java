@@ -8,18 +8,15 @@ import ro.powergrid.resource.ResourceType;
 import static org.junit.Assert.*;
 import ro.powergrid.resource.ResourceType;
 
-/**
- * Created by adi on 6/21/14.
- */
 public class ActiveResourceTests {
-
-    private void assertNotSet(Resource resource) {
-        assertEquals(Resource.NULL.getValue(), resource.getValue());
-    }
 
     private ActiveResource createActiveResource() {
         ResourceType notImportant = ResourceType.COAL;
         return new ActiveResource(notImportant);
+    }
+
+    private void assertNotSet(Resource resource) {
+        assertEquals(Resource.NULL.getValue(), resource.getValue());
     }
 
     @Test
