@@ -1,12 +1,4 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Jun 21, 2014, 4:19:08 PM
-    Author     : Catalin
-*/
+
 .power-plant div {
     border: 1px solid green;
     width: 300px;
@@ -15,4 +7,8 @@ and open the template in the editor.
 
 .plant-card-title {
     font-size: 14px;
+}
+
+.resource-market {
+    border: 2px solid lawngreen;
 }
