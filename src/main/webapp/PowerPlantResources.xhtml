@@ -5,6 +5,7 @@
     <h:form>
         <ui:repeat value="#{activePlants.activeResource}" var="activeResource"
                    varStatus="status">
+            <h3 class="plant-card-title">Plant No: #{status.index+3}</h3>
             <div>
                 Available resources: #{activeResource.resource}
                 <br/>
