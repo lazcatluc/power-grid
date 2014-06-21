@@ -25,13 +25,14 @@ public class ShouldBeAbleToPowerPlantTest {
         assertTrue(pp.canPowerCities());
     }
     
-    @Test
-    @Ignore
+    @Test   
     public void powerPlant3Keeps1OilAfterPoweringCitiesWith3Oil() 
             throws Exception {
         PowerPlant pp = PowerPlantBuilder.three();
         pp.addEnergyResources(3, new OilResource());
         
-        assertTrue(pp.canPowerCities());
+        new PowerPlantAdministrator().firePlant(pp);
+        
+        assertEquals(1, pp.getTotalResourcesStored());
     }
 }

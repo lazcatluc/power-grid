@@ -37,6 +37,23 @@ public class PowerPlant {
     }
     
     public boolean canPowerCities() {
-        return numberOfNecessaryResources <= energyResources.size();
+        return getNumberOfNecessaryResources() <= energyResources.size();
+    }
+
+    Object getTotalResourcesStored() {
+        return energyResources.size();
+    }
+
+    /**
+     * @return the numberOfNecessaryResources
+     */
+    public int getNumberOfNecessaryResources() {
+        return numberOfNecessaryResources;
+    }
+
+    void consumeResources(int numberOfNecessaryResources) {
+        for (int i = 0; i< numberOfNecessaryResources; i++) {
+            energyResources.remove(energyResources.iterator().next());
+        }
     }
 }
