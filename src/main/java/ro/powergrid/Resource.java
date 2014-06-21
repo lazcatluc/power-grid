@@ -6,11 +6,11 @@ public class Resource {
     private int resourceValue;
     private ResourceType resourceType;
 
-    public Resource(int resourceValue, ResourceType resourceType){
+    public Resource(int resourceValue,  ResourceType resourceType){
         this.resourceValue= resourceValue;
         this.resourceType = resourceType;
     }
 
     public int getValue() { return resourceValue; }
-    public int getResourceType() { return resourceType;}
+    public ResourceType getResourceType() { return resourceType;}
 }
