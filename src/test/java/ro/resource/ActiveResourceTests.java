@@ -3,6 +3,7 @@ package ro.resource;
 import org.junit.Test;
 import ro.powergrid.resource.ActiveResource;
 import ro.powergrid.resource.Resource;
+import ro.powergrid.resource.ResourceType;
 
 import static org.junit.Assert.*;
 import ro.powergrid.resource.ResourceType;
@@ -12,14 +13,24 @@ import ro.powergrid.resource.ResourceType;
  */
 public class ActiveResourceTests {
 
+    private void assertNotSet(Resource resource) {
+        assertEquals(Resource.NULL.getValue(), resource.getValue());
+    }
+
+    private ActiveResource createActiveResource() {
+        ResourceType notImportant = ResourceType.COAL;
+        return new ActiveResource(notImportant);
+    }
+
     @Test
-    public void whenUpdatePowerPlantResourcesWithoutSettingResourceTheActiveResourceNotSet() {
-        ActiveResource activeResource = new ActiveResource(ResourceType.NONE);
+    public void whenUpdatePowerPlantResources_WithoutSettingResource_TheActiveResourceIsNotSet(){
+        ActiveResource activeResource = createActiveResource();
+
         activeResource.updatePowerPlantResources();
 
-        Resource actual = activeResource.getResource();
-
-        assertEquals(Resource.NULL.getValue(), actual.getValue());
-        assertEquals(ResourceType.NONE, actual.getResourceType());
+        Resource resource = activeResource.getResource();
+        assertNotSet(resource);
     }
+
+    // TODO: Add a test that the resource type gets inherited
 }
