@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
         <title>Facelets title</title>
+
+        <style type="text/css">
+            .power-plant {
+                border: 1px solid green;
+                width: 100px;
+                height: 100px;
+            }
+
+            .plant-card-title {
+                font-size: 14px;
+            }
+        </style>
     </h:head>
+
     <h:body>
         <h:outputText value="#{msg.welcomeMessage}" />
-        <a href="PowerPlantResources.xhtml">Power Plant Resources</a>
+        <ui:include src="player-board.xhtml"/>
     </h:body>
 </ui:composition>
