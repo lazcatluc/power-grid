@@ -6,6 +6,10 @@
 
 package ro.powergrid.plant;
 
+import java.util.HashSet;
+import java.util.Set;
+import ro.powergrid.resource.ResourceType;
+
 /**
  *
  * @author Catalin
@@ -13,9 +17,15 @@ package ro.powergrid.plant;
 public class PowerPlantBuilder {
     private int basePrice;
     private int necessaryResources;
+    private Set<ResourceType> resourceTypes = new HashSet<>();
     
     public PowerPlantBuilder withBasePrice(int basePrice) {
         this.basePrice = basePrice;
+        return this;
+    }
+    
+    public PowerPlantBuilder withResourceType(ResourceType type) {
+        resourceTypes.add(type);
         return this;
     }
     
@@ -25,16 +35,16 @@ public class PowerPlantBuilder {
     }
     
     public PowerPlant build() {
-        return new PowerPlant(basePrice, necessaryResources);
+        return new PowerPlant(basePrice, necessaryResources, resourceTypes);
     }
     
     public static PowerPlant three() {
         return new PowerPlantBuilder().withBasePrice(3)
-                .withNecessaryResources(2).build();
+                .withNecessaryResources(2).withResourceType(ResourceType.OIL).build();
     }
     
     public static PowerPlant four() {
         return new PowerPlantBuilder().withBasePrice(4)
-                .withNecessaryResources(2).build();
+                .withNecessaryResources(2).withResourceType(ResourceType.COAL).build();
     }
 }

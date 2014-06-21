@@ -7,15 +7,16 @@
                    varStatus="status">
             <h3 class="plant-card-title">Plant No: #{status.index+3}</h3>
             <div>
-                Available resources: #{activeResource.resource}
+                Available resources: #{activePlants.plants.get(status.index).energyResources}
                 <br/>
                 Input the number of available resources for plant number #{status.index+3}
                 <h:inputText value="#{activeResource.availableResources}" />
-                <h:commandButton type="submit" value="#{msg.test}" 
+                <h:commandButton type="submit" value="#{msg.add}" 
                         action="#{activePlants.updatePowerPlantResources(status.index)}"/>
 		
-		 <h:commandButton type="submit" value="Power the plant!" action="#{firePlant.firePlantThree}"
-	            disabled="#{firePlant.canPowerCities() == false}"/>
+		 <h:commandButton type="submit" value="Power the plant!" 
+                        action="#{firePlant.firePlant(activePlants.plants.get(status.index))}"
+                        disabled="#{!activePlants.plants.get(status.index).canPowerCities()}"/>
             </div>
         </ui:repeat>
     </h:form>

@@ -5,8 +5,10 @@
  */
 package ro.powergrid.plant;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 import ro.powergrid.resource.Resource;
 import ro.powergrid.resource.ResourceType;
 
@@ -14,16 +16,20 @@ import ro.powergrid.resource.ResourceType;
  *
  * @author Catalin
  */
-public class PowerPlant {
+public class PowerPlant implements Serializable {
+    private static final long serialVersionUID = 1l;
 
     private final int basePrice;
     private final int numberOfNecessaryResources;
     private Collection<Resource> energyResources;
+    private Set<ResourceType> acceptableResourceTypes;
 
-    public PowerPlant(int basePrice, int numberOfNecessaryResources) {
+    public PowerPlant(int basePrice, int numberOfNecessaryResources, 
+            Set<ResourceType> acceptableResourceTypes) {
         this.basePrice = basePrice;
         this.numberOfNecessaryResources = numberOfNecessaryResources;
         this.energyResources = new ArrayList<>();
+        this.acceptableResourceTypes = acceptableResourceTypes;
     }
 
     /**
@@ -40,8 +46,11 @@ public class PowerPlant {
     }
 
     public int getTotalResourcesStored() {
-    	return 0;
-//        return getEnergyResources().stream().mapToInt(Resource::getValue).sum();
+        int sum = 0;
+        for (Resource resource : getEnergyResources()) {
+            sum +=resource.getValue();
+        }
+        return sum;
     }
 
     /**
@@ -69,5 +78,23 @@ public class PowerPlant {
      */
     public Collection<Resource> getEnergyResources() {
         return energyResources;
+    }
+
+    /**
+     * @return the acceptableResourceTypes
+     */
+    public Collection<ResourceType> getAcceptableResourceTypes() {
+        return acceptableResourceTypes;
+    }
+
+    public boolean acceptsResourceType(ResourceType type) {
+        return acceptableResourceTypes.contains(type);
+    }
+
+    /**
+     * @return the basePrice
+     */
+    public int getBasePrice() {
+        return basePrice;
     }
 }

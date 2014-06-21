@@ -2,14 +2,14 @@
         xmlns="http://www.w3.org/1999/xhtml"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:h="http://java.sun.com/jsf/html">
-    <form>
+    <h:form>
         Buy resources:
         <div>
-            Type: <input type="text" name="resourceToBuyType"/>
+            Type: <h:inputText value="#{activePlayers.player.resourceToBuyType}"/>
         </div>
         <div>
-            Quantity: <input type="text" name="resourceToBuyQuantity"/>
+        	Quantity: <h:inputText value="#{activePlayers.player.resourceToBuyQuantity}"/>
         </div>
         <h:commandButton value="Buy"/>
-    </form>
+    </h:form>
 </ui:composition>
