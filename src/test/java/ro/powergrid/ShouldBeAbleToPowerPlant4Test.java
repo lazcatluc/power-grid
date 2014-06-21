@@ -36,4 +36,11 @@ public class ShouldBeAbleToPowerPlant4Test {
         assertTrue(pp.canPowerCities());
     }
     
+    @Test
+    public void powerPlant4CanBePoweredWith4Oil() throws Exception {
+        PowerPlant pp = PowerPlantBuilder.four();
+        pp.addEnergyResources(4, new Oil());
+        
+        assertTrue(pp.canPowerCities());
+    }
 }
