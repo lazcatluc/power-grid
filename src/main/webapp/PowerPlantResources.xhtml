@@ -1,10 +1,19 @@
 <ui:composition
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:h="http://java.sun.com/jsf/html">
-    <div>
-        Input the number of available resources for plant number 3
-        <input name="availableResources" type="text" value=""/>
-        <h:commandButton type="submit" value="Ok" action="#{activeResource.updatePowerPlantResources}"/>
-    </div>
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html">
+    <h:form>
+        <ui:repeat value="#{activePlants.activeResource}" var="activeResource"
+                   varStatus="status">
+            <h3 class="plant-card-title">Plant No: #{status.index+3}</h3>
+            <div>
+                Available resources: #{activeResource.resource}
+                <br/>
+                Input the number of available resources for plant number #{status.index+3}
+                <h:inputText value="#{activeResource.availableResources}" />
+                <h:commandButton type="submit" value="#{msg.test}" 
+                        action="#{activePlants.updatePowerPlantResources(status.index)}"/>
+            </div>
+        </ui:repeat>
+    </h:form>
 </ui:composition>
