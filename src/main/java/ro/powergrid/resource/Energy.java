@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package ro.powergrid;
+package ro.powergrid.resource;
 
 /**
  *
  * @author Catalin
  */
-public interface EnergyResource {
+public interface Energy {
     
 }

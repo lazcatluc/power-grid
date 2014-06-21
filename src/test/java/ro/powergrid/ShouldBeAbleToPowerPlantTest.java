@@ -6,8 +6,11 @@
 
 package ro.powergrid;
 
+import ro.powergrid.plant.PowerPlant;
+import ro.powergrid.plant.PowerPlantAdministrator;
+import ro.powergrid.plant.PowerPlantBuilder;
+import ro.powergrid.resource.Oil;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -20,7 +23,7 @@ public class ShouldBeAbleToPowerPlantTest {
     @Test
     public void powerPlant3CanBePoweredWith2Oil() throws Exception {
         PowerPlant pp = PowerPlantBuilder.three();
-        pp.addEnergyResources(2, new OilResource());
+        pp.addEnergyResources(2, new Oil());
         
         assertTrue(pp.canPowerCities());
     }
@@ -29,7 +32,7 @@ public class ShouldBeAbleToPowerPlantTest {
     public void powerPlant3Keeps1OilAfterPoweringCitiesWith3Oil() 
             throws Exception {
         PowerPlant pp = PowerPlantBuilder.three();
-        pp.addEnergyResources(3, new OilResource());
+        pp.addEnergyResources(3, new Oil());
         
         new PowerPlantAdministrator().firePlant(pp);
         

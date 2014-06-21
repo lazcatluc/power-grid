@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package ro.powergrid;
+package ro.powergrid.plant;
 
+import ro.powergrid.resource.Energy;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -17,7 +18,7 @@ public class PowerPlant {
     
     private final int basePrice;
     private final int numberOfNecessaryResources;
-    private Collection<EnergyResource> energyResources;
+    private Collection<Energy> energyResources;
     
     public PowerPlant(int basePrice, int numberOfNecessaryResources) {
         this.basePrice = basePrice;
@@ -30,7 +31,7 @@ public class PowerPlant {
      * @param howMany
      * @param resource
      */
-    public void addEnergyResources(int howMany, EnergyResource resource) {
+    public void addEnergyResources(int howMany, Energy resource) {
         for (int i = 0; i < howMany; i++) {
             energyResources.add(resource);
         }
@@ -40,7 +41,7 @@ public class PowerPlant {
         return getNumberOfNecessaryResources() <= energyResources.size();
     }
 
-    Object getTotalResourcesStored() {
+    public int getTotalResourcesStored() {
         return energyResources.size();
     }
 
