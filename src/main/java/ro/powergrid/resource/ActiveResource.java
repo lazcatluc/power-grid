@@ -1,5 +1,6 @@
 package ro.powergrid.resource;
 
+
 import java.io.Serializable;
 
 /**
@@ -10,11 +11,11 @@ public class ActiveResource<T extends ResourceType> implements Serializable {
     private int availableResources;
     private Resource resource = Resource.NULL;
     private final T resourceType;
-    
+
     public ActiveResource(T resourceType) {
         this.resourceType = resourceType;
     }
-    
+
     public void updatePowerPlantResources() {
         setResource(new Resource(availableResources, resourceType));
     }

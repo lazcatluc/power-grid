@@ -6,15 +6,16 @@
 
 package ro.powergrid;
 
-import ro.powergrid.plant.PowerPlant;
-import ro.powergrid.plant.PowerPlantAdministrator;
-import ro.powergrid.plant.PowerPlantBuilder;
-import ro.powergrid.resource.Coal;
-import ro.powergrid.resource.Oil;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import ro.powergrid.plant.PowerPlant;
+import ro.powergrid.plant.PowerPlantBuilder;
+import ro.powergrid.resource.Coal;
+import ro.powergrid.resource.ResourceType;
 
 /**
  *
@@ -45,14 +46,14 @@ public class ShouldBeAbleToPowerPlant4Test {
 
 	@Test
     public void powerPlant4CanBePoweredWith2Oil() throws Exception {
-        pp.addEnergyResources(2, new Coal());
+        pp.addEnergyResources(2, ResourceType.OIL);
         
         assertTrue(pp.canPowerCities());
     }
     
     @Test
     public void powerPlant4CanBePoweredWith3Oil() throws Exception {
-        pp.addEnergyResources(3, new Coal());
+        pp.addEnergyResources(3, ResourceType.OIL);
         
         assertTrue(pp.canPowerCities());
     }
