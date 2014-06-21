@@ -29,5 +29,22 @@ public class ActiveResourceTests {
         assertNotSet(resource);
     }
 
+    @Test
+    public void whenUpdatePowerPlantResources_WithoutSettingResource_TheResourceIsInherited(){
+        IFaces faces = mock(IFaces.class);
+        ResourceType initialResourceType = new ResourceType("doesnt matter");
+        int initianResourceAmount = 13;
+        ActiveResource activeResource = new ActiveResource(initialResourceType, faces);
+        activeResource.setAvailableResources(initianResourceAmount);
+
+        activeResource.updatePowerPlantResources();
+
+        Resource resource = activeResource.getResource();
+        assertEquals(initialResourceType, resource.getResourceType());
+        assertEquals(initianResourceAmount, resource.getValue());
+    }
+
+
+
     // TODO: Add a test that the resource type gets inherited
-}
+}  // TODO: when updating a resource with setting a resource, the new is used
