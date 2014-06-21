@@ -4,11 +4,11 @@
                 xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
         <title>Facelets title</title>
-        <link rel="stylesheet" href="#{request.contextPath}/css/style.css"/>
+        <link rel="stylesheet" href="#{request.contextPath}/css/style.css" />
     </h:head>
 
     <h:body>
-        <h:outputText value="#{msg.welcomeMessage}"/>
+        <h:outputText value="#{msg.welcomeMessage}" />
         <ui:include src="player-board.xhtml"/>
         <ui:include src="resource-catalog.xhtml"/>
     </h:body>
