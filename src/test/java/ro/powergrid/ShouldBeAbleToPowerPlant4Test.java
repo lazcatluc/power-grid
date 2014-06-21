@@ -9,9 +9,9 @@ package ro.powergrid;
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantAdministrator;
 import ro.powergrid.plant.PowerPlantBuilder;
-import ro.powergrid.resource.Oil;
 import static org.junit.Assert.*;
 import org.junit.Test;
+import ro.powergrid.resource.ResourceType;
 
 
 /**
@@ -23,7 +23,7 @@ public class ShouldBeAbleToPowerPlant4Test {
 	@Test
     public void powerPlant4CanBePoweredWith2Oil() throws Exception {
         PowerPlant pp = PowerPlantBuilder.four();
-        pp.addEnergyResources(2, new Oil());
+        pp.addEnergyResources(2, ResourceType.OIL);
         
         assertTrue(pp.canPowerCities());
     }
@@ -31,7 +31,7 @@ public class ShouldBeAbleToPowerPlant4Test {
     @Test
     public void powerPlant4CanBePoweredWith3Oil() throws Exception {
         PowerPlant pp = PowerPlantBuilder.four();
-        pp.addEnergyResources(3, new Oil());
+        pp.addEnergyResources(3, ResourceType.OIL);
         
         assertTrue(pp.canPowerCities());
     }

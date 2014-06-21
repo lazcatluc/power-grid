@@ -28,8 +28,8 @@ public class ActivePlants implements Serializable {
     
     public ActivePlants() {
         FacesWrapper facesWrapper = new FacesWrapper();
-        activeResource.add(new ActiveResource(new ResourceType("Oil"), facesWrapper));
-        activeResource.add(new ActiveResource(new ResourceType("Coal"), facesWrapper));
+        activeResource.add(new ActiveResource(ResourceType.OIL, facesWrapper));
+        activeResource.add(new ActiveResource(ResourceType.COAL, facesWrapper));
     }
     
     public ActiveResource getResource(int position) {
