@@ -3,19 +3,20 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html">
     <h:form>
-        <ui:repeat value="#{activePlants.activeResource}" var="activeResource"
+        <ui:repeat value="#{activePlants.plants}" var="plant"
                    varStatus="status">
             <h3 class="plant-card-title">Plant No: #{status.index+3}</h3>
             <div>
-                Available resources: #{activeResource.resource}
+                Available resources: #{plant.energyResources}
                 <br/>
                 Input the number of available resources for plant number #{status.index+3}
-                <h:inputText value="#{activeResource.availableResources}" />
-                <h:commandButton type="submit" value="#{msg.test}" 
+                <h:inputText value="#{activePlants.activeResource.get(status.index).availableResources}" />
+                <h:commandButton type="submit" value="#{msg.add}" 
                         action="#{activePlants.updatePowerPlantResources(status.index)}"/>
 		
-		 <h:commandButton type="submit" value="Power the plant!" action="#{firePlant.firePlantThree}"
-	            disabled="#{firePlant.canPowerCities() == false}"/>
+		 <h:commandButton type="submit" value="Power the plant!" 
+                        action="#{firePlant.firePlant(plant)}"
+                        disabled="#{!plant.canPowerCities()}"/>
             </div>
         </ui:repeat>
     </h:form>
