@@ -48,6 +48,4 @@ public class ActiveResourceTests {
         return activeResource;
     }
 
-
-    // TODO: Add a test that the resource type gets inherited
-}  // TODO: when updating a resource with setting a resource, the new is used
+}
