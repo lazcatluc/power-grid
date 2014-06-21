@@ -1,4 +1,5 @@
-package ro.powergrid;
+package ro.powergrid.resource;
+
 /**
  * Created by adi on 6/21/14.
  */
