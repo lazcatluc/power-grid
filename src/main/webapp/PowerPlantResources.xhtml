@@ -6,5 +6,8 @@
         Input the number of available resources for plant number 3
         <input name="availableResources" type="text" value=""/>
         <h:commandButton type="submit" value="Ok" action="#{activeResource.updatePowerPlantResources}"/>
+
+        <h:commandButton type="submit" value="Power the plant!" action="#{firePlant.firePlantThree}"
+            disabled="#{firePlant.plantThree.canPowerCities() == false}"/>
     </div>
 </ui:composition>
