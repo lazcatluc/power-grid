@@ -6,10 +6,13 @@
 
 package ro.powergrid.plant;
 
+import javax.faces.bean.ManagedBean;
+
 /**
  *
  * @author Catalin
  */
+@ManagedBean(name = "firePlant", eager = true)
 public class PowerPlantAdministrator {
     public void firePlant(PowerPlant plant) {
         plant.consumeResources(plant.getNumberOfNecessaryResources());

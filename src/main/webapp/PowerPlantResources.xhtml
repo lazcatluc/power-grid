@@ -15,7 +15,7 @@
                         action="#{activePlants.updatePowerPlantResources(status.index)}"/>
 		
 		 <h:commandButton type="submit" value="Power the plant!" action="#{firePlant.firePlantThree}"
-	            disabled="#{firePlant.plantThree.canPowerCities() == false}"/>
+	            disabled="#{firePlant.canPowerCities() == false}"/>
             </div>
         </ui:repeat>
     </h:form>

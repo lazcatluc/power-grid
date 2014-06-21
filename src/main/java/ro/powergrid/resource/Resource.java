@@ -8,8 +8,8 @@ import java.io.Serializable;
 public class Resource implements Serializable {
     private static final long serialVersionUID = 1l;
     public static Resource NULL = new Resource(0, ResourceType.NONE);
-    private int resourceValue;
-    private ResourceType resourceType;
+    private final int resourceValue;
+    private final ResourceType resourceType;
 
     public Resource(int resourceValue,  ResourceType resourceType){
         this.resourceValue= resourceValue;

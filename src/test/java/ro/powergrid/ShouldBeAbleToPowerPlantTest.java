@@ -28,6 +28,21 @@ public class ShouldBeAbleToPowerPlantTest {
         assertTrue(pp.canPowerCities());
     }
     
+    @Test
+    public void newPowerPlant3HasNoEnergyResources() throws Exception {
+        PowerPlant pp = PowerPlantBuilder.three();
+        
+        assertTrue(pp.getEnergyResources().isEmpty());
+    }
+    
+    @Test
+    public void newPowerPlant3Has1ResourceTypeAfterAddingResources() throws Exception {
+        PowerPlant pp = PowerPlantBuilder.three();
+        pp.addEnergyResources(3, ResourceType.OIL);
+        
+        assertEquals(1, pp.getEnergyResources().size());
+    }
+    
     @Test   
     public void powerPlant3Keeps1OilAfterPoweringCitiesWith3Oil() 
             throws Exception {
@@ -36,6 +51,7 @@ public class ShouldBeAbleToPowerPlantTest {
         
         new PowerPlantAdministrator().firePlant(pp);
         
+        assertEquals(1, pp.getEnergyResources().size());
         assertEquals(1, pp.getTotalResourcesStored());
     }
     
