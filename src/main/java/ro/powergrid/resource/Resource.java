@@ -23,6 +23,26 @@ public class Resource implements Serializable {
     public String toString() {
         return resourceValue + " " + resourceType;
     }
-    
-    
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Resource resource = (Resource) o;
+
+        if (resourceValue != resource.resourceValue) return false;
+        if (resourceType != null ? !resourceType.equals(resource.resourceType) : resource.resourceType != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = resourceValue;
+        result = 31 * result + (resourceType != null ? resourceType.hashCode() : 0);
+        return result;
+    }
 }
