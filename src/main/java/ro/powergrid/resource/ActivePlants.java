@@ -6,6 +6,7 @@
 
 package ro.powergrid.resource;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,8 @@ public class ActivePlants implements Serializable {
     private List<ActiveResource> activeResource = new ArrayList<>();
     
     public ActivePlants() {
-        activeResource.add(new ActiveResource(new ResourceType("Oil")));
-        activeResource.add(new ActiveResource(new ResourceType("Coal")));
+        activeResource.add(new ActiveResource(ResourceType.OIL));
+        activeResource.add(new ActiveResource(ResourceType.COAL));
     }
     
     public ActiveResource getResource(int position) {
