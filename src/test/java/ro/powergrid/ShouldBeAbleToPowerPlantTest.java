@@ -38,4 +38,19 @@ public class ShouldBeAbleToPowerPlantTest {
         
         assertEquals(1, pp.getTotalResourcesStored());
     }
+    
+    @Test
+    public void havingZeroOilOnPlant3CannotPowerCities() throws Exception {
+        PowerPlant pp = PowerPlantBuilder.three();
+        
+        assertFalse(pp.canPowerCities());
+    }
+    
+    @Test
+    public void havingOneOilOnPlant3CannotPowerCities() throws Exception {
+        PowerPlant pp = PowerPlantBuilder.three();
+        pp.addEnergyResources(1, new Oil());
+        
+        assertFalse(pp.canPowerCities());
+    }
 }
