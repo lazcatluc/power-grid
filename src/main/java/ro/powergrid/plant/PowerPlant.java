@@ -40,7 +40,8 @@ public class PowerPlant {
     }
 
     public int getTotalResourcesStored() {
-        return getEnergyResources().stream().mapToInt(Resource::getValue).sum();
+    	return 0;
+//        return getEnergyResources().stream().mapToInt(Resource::getValue).sum();
     }
 
     /**
