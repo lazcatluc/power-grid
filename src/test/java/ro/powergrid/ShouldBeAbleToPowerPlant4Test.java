@@ -13,53 +13,54 @@ import ro.powergrid.resource.Coal;
 import ro.powergrid.resource.Oil;
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
-
 
 /**
  *
- * @author Catalin
+ * @author Adelina
  */
 public class ShouldBeAbleToPowerPlant4Test {
+	private PowerPlant pp;
+	
+    @Before
+	public void setUp() throws Exception
+    {
+        pp = PowerPlantBuilder.four();
+    }
+
+    @Test
+    public void powerPlant4NoPoweredWith0Coal() throws Exception {
+    	pp.addEnergyResources(0, new Coal());
+    	
+    	assertFalse(pp.canPowerCities());
+    }
     
+    @Test
+    public void powerPlant4NoPoweredWith1Coal() throws Exception {
+    	pp.addEnergyResources(1, new Coal());
+    	
+    	assertFalse(pp.canPowerCities());
+    }
+
 	@Test
     public void powerPlant4CanBePoweredWith2Oil() throws Exception {
-        PowerPlant pp = PowerPlantBuilder.four();
-        pp.addEnergyResources(2, new Oil());
+        pp.addEnergyResources(2, new Coal());
         
         assertTrue(pp.canPowerCities());
     }
     
     @Test
     public void powerPlant4CanBePoweredWith3Oil() throws Exception {
-        PowerPlant pp = PowerPlantBuilder.four();
-        pp.addEnergyResources(3, new Oil());
+        pp.addEnergyResources(3, new Coal());
         
         assertTrue(pp.canPowerCities());
     }
     
     @Test
     public void powerPlant4CanBePoweredWith4Oil() throws Exception {
-        PowerPlant pp = PowerPlantBuilder.four();
-        pp.addEnergyResources(4, new Oil());
+        pp.addEnergyResources(4, new Coal());
         
         assertTrue(pp.canPowerCities());
     }
-    
-    @Test
-    public void powerPlant4NoPoweredWith0Coal() throws Exception {
-        PowerPlant pp = PowerPlantBuilder.four();
-        pp.addEnergyResources(0, new Coal());
-        
-        assertFalse(pp.canPowerCities());
-    }
-    
-    @Test
-    public void powerPlant4NoPoweredWith1Coal() throws Exception {
-        PowerPlant pp = PowerPlantBuilder.four();
-        pp.addEnergyResources(1, new Coal());
-        
-        assertFalse(pp.canPowerCities());
-    }
-    
 }
