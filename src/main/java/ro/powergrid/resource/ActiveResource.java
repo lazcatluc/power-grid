@@ -13,7 +13,7 @@ public class ActiveResource<T extends ResourceType> implements Serializable {
     private Resource resource = Resource.NULL;
     private final T resourceType;
 
-    public ActiveResource(T resourceType, IFaces faces) {
+    public ActiveResource(T resourceType) {
         this.resourceType = resourceType;
     }
 

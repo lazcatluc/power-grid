@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class Resource implements Serializable {
     private static final long serialVersionUID = 1l;
-    public static Resource NULL = new Resource(0, ResourceType.NULL);
+    public static Resource NULL = new Resource(0, ResourceType.NONE);
     private int resourceValue;
     private ResourceType resourceType;
 
