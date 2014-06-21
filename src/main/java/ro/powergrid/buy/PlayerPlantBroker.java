@@ -15,44 +15,18 @@ import ro.powergrid.resource.PlantOwner;
  *
  * @author Catalin
  */
+//@Stateless
 public class PlayerPlantBroker {
-    private PlantOwner plantOwner;
+    //@Inject
     private PlantMarketplace plantMarketplace;
+    //@Inject
     private PaymentProcessor paymentProcessor;
-    private PowerPlant powerPlant;
     
-    public void transferPlant() {
+    
+    public void transferPlant(PlantOwner plantOwner, PowerPlant powerPlant) {
         plantOwner.add(powerPlant);
         paymentProcessor.charge(plantOwner, powerPlant.getBasePrice());
         plantMarketplace.removeBuyablePlant(powerPlant);
-    }
-
-    /**
-     * @return the plantOwner
-     */
-    public PlantOwner getPlantOwner() {
-        return plantOwner;
-    }
-
-    /**
-     * @param plantOwner the plantOwner to set
-     */
-    public void setPlantOwner(PlantOwner plantOwner) {
-        this.plantOwner = plantOwner;
-    }
-
-    /**
-     * @return the powerPlant
-     */
-    public PowerPlant getPowerPlant() {
-        return powerPlant;
-    }
-
-    /**
-     * @param powerPlant the powerPlant to set
-     */
-    public void setPowerPlant(PowerPlant powerPlant) {
-        this.powerPlant = powerPlant;
     }
 
     /**
