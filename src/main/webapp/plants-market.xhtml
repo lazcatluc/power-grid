@@ -1,0 +1,23 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html">
+    <form>
+        <h:dataTable value="#{activePlants.plants}" var="plant" border="1">
+            <h:column>
+                <f:facet name="header">Acceptable resource types</f:facet>
+                <ui:repeat value="#{plant.acceptableResourceTypes}" var="resourceType">
+                    #{resourceType}
+                </ui:repeat>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Base price</f:facet>
+                #{plant.basePrice}
+            </h:column>
+
+        </h:dataTable>
+
+    </form>
+</ui:composition>
