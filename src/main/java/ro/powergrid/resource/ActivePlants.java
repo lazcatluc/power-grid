@@ -35,6 +35,10 @@ public class ActivePlants implements Serializable {
     public ActiveResource getResource(int position) {
         return activeResource.get(position);
     }
+    
+    public void updatePowerPlantResources(int position) {
+        getResource(position).updatePowerPlantResources();
+    }
 
     /**
      * @return the activeResource

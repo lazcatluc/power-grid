@@ -3,15 +3,16 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:h="http://java.sun.com/jsf/html">
     <h:form>
-        <ui:repeat value="#{activePlants.activeResource}" val="activeResource"
+        <ui:repeat value="#{activePlants.activeResource}" var="activeResource"
                    varStatus="status">
+            <h3 class="plant-card-title">Plant No: #{status.index+3}</h3>
             <div>
-                Available resources: #{activePlants.getResource(status.index-1).resource}
+                Available resources: #{activeResource.resource}
                 <br/>
                 Input the number of available resources for plant number #{status.index+3}
-                <h:inputText value="#{activePlants.getResource(status.index-1).availableResources}" />
+                <h:inputText value="#{activeResource.availableResources}" />
                 <h:commandButton type="submit" value="#{msg.test}" 
-                        action="#{activePlants.getResource(status.index-1).updatePowerPlantResources()}"/>
+                        action="#{activePlants.updatePowerPlantResources(status.index)}"/>
             </div>
         </ui:repeat>
     </h:form>
