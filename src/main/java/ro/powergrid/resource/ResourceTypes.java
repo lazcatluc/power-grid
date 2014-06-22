@@ -1,5 +1,7 @@
 package ro.powergrid.resource;
 
+import ro.powergrid.plant.PowerPlant;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
@@ -21,6 +23,13 @@ public class ResourceTypes implements Serializable {
         defaultValues.remove(ResourceType.NONE);
         Collections.sort(defaultValues, new ResourceTypeComparator());
         return defaultValues;
+    }
+
+    public List<ResourceType> getFilteredResourceTypes(PowerPlant powerPlant){
+        ArrayList<ResourceType> filteredResourceTypes = new ArrayList<ResourceType>();
+        filteredResourceTypes.addAll(getDefaultResourceTypes());
+        filteredResourceTypes.retainAll(powerPlant.getAcceptableResourceTypes());
+        return filteredResourceTypes;
     }
 
     public ResourceType getChosenResourceType() {
