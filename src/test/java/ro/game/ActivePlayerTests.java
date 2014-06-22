@@ -32,7 +32,27 @@ public class ActivePlayerTests {
         int quantity = (resources.get(buildResourceFor(ResourceType.COAL))).intValue();
 
         assertEquals(1, quantity);
+    }
 
+    @Test
+    public void canDisplayTheAmountOfOil() {
+        player.buyResources(ResourceType.OIL, 1);
+
+        assertEquals(1, player.getResourcesOfType(ResourceType.OIL));
+    }
+
+    @Test
+    public void canDisplayTheAmountOfCoal(){
+        player.buyResources(ResourceType.COAL, 3);
+
+        assertEquals(3, player.getResourcesOfType(ResourceType.COAL));
+    }
+
+    @Test
+    public void canDisplayTheAmountOfUranium(){
+        player.buyResources(ResourceType.URANIUM, 6);
+
+        assertEquals(6, player.getResourcesOfType(ResourceType.URANIUM));
     }
 
     @Test

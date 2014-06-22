@@ -41,6 +41,10 @@ public class ActivePlayer implements Serializable {
 	{
 		return resourcesMap;
 	}
+
+    public int getResourcesOfType(ResourceType resourceType){
+        return (getResources().get(new Resource(1, resourceType))).intValue();
+    }
 	
 	public void setResourceToBuyType(ResourceType resourceType)
 	{
