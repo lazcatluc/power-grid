@@ -9,7 +9,6 @@ import javax.faces.bean.SessionScoped;
 
 import ro.powergrid.resource.Resource;
 import ro.powergrid.resource.ResourceType;
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 @ManagedBean(name = "activePlayer", eager = true)
 @SessionScoped
@@ -19,23 +18,44 @@ public class ActivePlayer implements Serializable {
 	private int money;
 	private Map<Resource, Integer> resourcesMap = new HashMap<Resource, Integer>();
 	
-	public void buyResources(ResourceType resourceType, int quantity) {
+	private ResourceType resourceToBuyType;
+	private int resourceToBuyQuantity;
+	
+	public void buyResources(ResourceType resourceToBuyType, int resourceToBuyQuantity) {
 		int initialResourceAmount = 1;
-		Resource resource = new Resource(initialResourceAmount, resourceType);
+		Resource resource = new Resource(initialResourceAmount, resourceToBuyType);
 		
-		if (resourcesMap.containsKey(resourceType))
+		if (resourcesMap.containsKey(resourceToBuyType))
 		{
 			int initialQuantity = (resourcesMap.get(resource)).intValue();
-			resourcesMap.put(resource, initialQuantity + quantity);
+			resourcesMap.put(resource, initialQuantity + resourceToBuyQuantity);
 		}
 		else
 		{
-			resourcesMap.put(resource, quantity);
+			resourcesMap.put(resource, resourceToBuyQuantity);
 		}
 	}
 	
 	public Map<Resource, Integer> getResources()
 	{
 		return resourcesMap;
+	}
+	
+	public void setResourceToBuyType(ResourceType resourceType)
+	{
+		resourceToBuyType = resourceType;
+	}
+	
+	public ResourceType getResourceToBuyType() {
+		return resourceToBuyType;
+	}
+
+	public int getResourceToBuyQuantity() {
+		return resourceToBuyQuantity;
+	}
+
+	public void setResourceToBuyQuantity(int quantity)
+	{
+		resourceToBuyQuantity = quantity;
 	}
 }

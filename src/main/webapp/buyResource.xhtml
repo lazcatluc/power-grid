@@ -7,12 +7,12 @@
         Buy resources:
         <div>
             Type:
-            <h:selectOneMenu value="#{activePlayers.player.resourceToBuyType}">
+            <h:selectOneMenu value="#{activePlayer.resourceToBuyType}">
                 <f:selectItems value="#{resources.getDefaultResourceTypes()}" />
             </h:selectOneMenu>
         </div>
         <div>
-        	Quantity: <h:inputText value="#{activePlayers.player.resourceToBuyQuantity}"/>
+        	Quantity: <h:inputText value="#{activePlayer.resourceToBuyQuantity}"/>
         </div>
         <h:commandButton value="Buy"/>
     </h:form>
