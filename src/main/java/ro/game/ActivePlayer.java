@@ -14,26 +14,24 @@ import ro.powergrid.resource.ResourceType;
 @SessionScoped
 public class ActivePlayer implements Serializable {
     private static final long serialVersionUID = 1l;
-
-	private int money;
 	private Map<Resource, Integer> resourcesMap = new HashMap<Resource, Integer>();
-	
 	private ResourceType resourceToBuyType;
 	private int resourceToBuyQuantity;
 	
-	public void buyResources(ResourceType resourceToBuyType, int resourceToBuyQuantity) {
+	public void buyResources(ResourceType resourceToBuyType, int resourceToBuyAmount) {
 		int initialResourceAmount = 1;
 		Resource resource = new Resource(initialResourceAmount, resourceToBuyType);
 		
 		if (resourcesMap.containsKey(resource))
 		{
             Integer resourceAmount = resourcesMap.get(resource);
-            int initialQuantity = resourceAmount.intValue();
-			resourcesMap.put(resource, initialQuantity + resourceToBuyQuantity);
+            int initialAmount = resourceAmount.intValue();
+            int currentAmount = initialAmount + resourceToBuyAmount;
+            resourcesMap.put(resource, currentAmount);
 		}
 		else
 		{
-			resourcesMap.put(resource, resourceToBuyQuantity);
+			resourcesMap.put(resource, resourceToBuyAmount);
 		}
 	}
 	
@@ -43,7 +41,8 @@ public class ActivePlayer implements Serializable {
 	}
 
     public int getResourcesOfType(ResourceType resourceType){
-        return (getResources().get(new Resource(1, resourceType))).intValue();
+        int amountDoesntMatter = 1;
+        return (getResources().get(new Resource(amountDoesntMatter, resourceType))).intValue();
     }
 	
 	public void setResourceToBuyType(ResourceType resourceType)

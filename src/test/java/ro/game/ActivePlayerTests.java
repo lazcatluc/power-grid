@@ -18,7 +18,6 @@ public class ActivePlayerTests {
         player = new ActivePlayer();
     }
 
-
     private Resource buildResourceFor(ResourceType resourceType) {
         return new Resource(1, resourceType);
     }
