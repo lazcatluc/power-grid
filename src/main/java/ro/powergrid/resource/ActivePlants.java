@@ -68,8 +68,6 @@ public class ActivePlants implements Serializable {
      * @return the plants
      */
     public List<PowerPlant> getPlants() {
-        Logger.getLogger(ActivePlants.class.getName()).log(Level.INFO, "Plants: {0}", new Object[]{plants});
-        Logger.getLogger(ActivePlants.class.getName()).log(Level.INFO, "Active: {0}", new Object[]{activeResource});
         return plants;
     }
 }

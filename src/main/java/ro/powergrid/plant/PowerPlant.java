@@ -90,4 +90,11 @@ public class PowerPlant implements Serializable {
     public boolean acceptsResourceType(ResourceType type) {
         return acceptableResourceTypes.contains(type);
     }
+
+    /**
+     * @return the basePrice
+     */
+    public int getBasePrice() {
+        return basePrice;
+    }
 }
