@@ -25,4 +25,17 @@ public class ActivePlayerTests {
     	
     	assertEquals(1, quantity);
     }
+
+    @Test
+    public void buyTwoResourcesFromTheSameTypeWillIncreaseThatTypeAmount(){
+        player = new ActivePlayer();
+        Resource resource = new Resource(1, ResourceType.COAL);
+        player.buyResources(ResourceType.COAL, 1);
+
+        player.buyResources(ResourceType.COAL, 1);
+        Map<Resource, Integer> resources = player.getResources();
+        int quantity = (resources.get(resource)).intValue();
+
+        assertEquals(2, quantity);
+    }
 }

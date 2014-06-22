@@ -25,9 +25,10 @@ public class ActivePlayer implements Serializable {
 		int initialResourceAmount = 1;
 		Resource resource = new Resource(initialResourceAmount, resourceToBuyType);
 		
-		if (resourcesMap.containsKey(resourceToBuyType))
+		if (resourcesMap.containsKey(resource))
 		{
-			int initialQuantity = (resourcesMap.get(resource)).intValue();
+            Integer resourceAmount = resourcesMap.get(resource);
+            int initialQuantity = resourceAmount.intValue();
 			resourcesMap.put(resource, initialQuantity + resourceToBuyQuantity);
 		}
 		else
