@@ -9,7 +9,7 @@ import org.junit.Test;
 import ro.powergrid.resource.Resource;
 import ro.powergrid.resource.ResourceType;
 
-public class BuyResourceTests {
+public class ActivePlayerTests {
 	private ActivePlayer player;
 	
     @Test
