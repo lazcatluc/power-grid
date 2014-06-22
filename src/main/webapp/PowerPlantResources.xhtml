@@ -1,22 +1,27 @@
 <ui:composition
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html">
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:form>
         <ui:repeat value="#{activePlants.activeResource}" var="activeResource"
                    varStatus="status">
+            <c:set var="currentPowerPlant" value="#{activePlants.plants.get(status.index)}"></c:set>
             <h3 class="plant-card-title">Plant No: #{status.index+3}</h3>
             <div>
-                Available resources: #{activePlants.plants.get(status.index).energyResources}
+                Available resources: #{currentPowerPlant.energyResources}
                 <br/>
                 Input the number of available resources for plant number #{status.index+3}
                 <h:inputText value="#{activeResource.availableResources}" />
-                <h:commandButton type="submit" value="#{msg.add}" 
-                        action="#{activePlants.updatePowerPlantResources(status.index)}"/>
-		
-		 <h:commandButton type="submit" value="Power the plant!" 
-                        action="#{firePlant.firePlant(activePlants.plants.get(status.index))}"
-                        disabled="#{!activePlants.plants.get(status.index).canPowerCities()}"/>
+                <h:commandButton type="submit" value="#{msg.add}"
+                                 action="#{activePlants.updatePowerPlantResources(status.index)}"/>
+                <h:selectOneMenu value="#{resources.chosenResourceType}">
+                    <f:selectItems value="#{resources.getFilteredResourceTypes(currentPowerPlant)}" />
+                </h:selectOneMenu>
+                <h:commandButton type="submit" value="Power the plant!"
+                                 action="#{firePlant.firePlant(currentPowerPlant)}"
+                                 disabled="#{!currentPowerPlant.canPowerCities()}"/>
             </div>
         </ui:repeat>
     </h:form>
