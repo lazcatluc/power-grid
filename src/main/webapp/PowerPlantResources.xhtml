@@ -8,15 +8,28 @@
 		varStatus="status">
 		<c:set var="currentPowerPlant"
 			value="#{activePlants.plants.get(status.index)}"></c:set>
-		<h3 class="plant-card-title">Plant No: #{status.index+3}</h3>
-		<h:form>
-			<div>
-				Available resources: #{currentPowerPlant.energyResources} <br />
-				Input the number of available resources for plant number
-				#{status.index+3}
-				<h:inputText value="#{activeResource.availableResources}"
+		<h3 class="plant-card-title">
+			<h:outputFormat value="#{msg.powerPlantTitle}">
+				<f:param value="#{status.index+3}" />
+			</h:outputFormat>
+		</h3>
+
+		<div>
+			<h:form>
+				<h:outputFormat value="#{msg.powerPlantAvailableResources}">
+					<f:param value="#{currentPowerPlant.energyResources}" />
+				</h:outputFormat>
+				<br />
+				<h:outputFormat value="#{msg.inputAvailableResources}">
+					<f:param value="#{status.index+3}" />
+				</h:outputFormat>
+
+				<h:inputText id="inputAvailableResources"
+					value="#{activeResource.availableResources}"
 					validator="#{activePlants.plantStorageValidator(currentPowerPlant).availableResourcesValidator}"
 					validatorMessage="#{msg.plantOverStocked}" />
+				<h:message for="inputAvailableResources" />
+
 				<h:commandButton value="#{msg.add}">
 					<f:ajax event="click" execute="@form" render="@form"
 						listener="#{activePlants.updatePowerPlantResources(status.index)}" />
@@ -26,11 +39,15 @@
 					<f:selectItems
 						value="#{resources.getFilteredResourceTypes(currentPowerPlant)}" />
 				</h:selectOneMenu>
-				<h:commandButton type="submit" value="Power the plant!"
-					action="#{plantAdministrator.firePlant(currentPowerPlant)}"
-					disabled="#{!currentPowerPlant.canPowerCities()}" />
-			</div>
-		</h:form>
+				
+				<h:commandButton value="#{msg.powerThePlant}"
+					disabled="#{!currentPowerPlant.canPowerCities()}">
+					<f:ajax event="click" render="@form"
+						listener="#{plantAdministrator.firePlant(currentPowerPlant)}" />
+				</h:commandButton>
+			</h:form>
+		</div>
+
 	</ui:repeat>
 
 </ui:composition>
