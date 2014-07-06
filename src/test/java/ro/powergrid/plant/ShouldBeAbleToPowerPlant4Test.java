@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package ro.powergrid;
+package ro.powergrid.plant;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

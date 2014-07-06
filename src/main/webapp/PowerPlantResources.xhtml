@@ -20,7 +20,7 @@
                     <f:selectItems value="#{resources.getFilteredResourceTypes(currentPowerPlant)}" />
                 </h:selectOneMenu>
                 <h:commandButton type="submit" value="Power the plant!"
-                                 action="#{firePlant.firePlant(currentPowerPlant)}"
+                                 action="#{plantAdministrator.firePlant(currentPowerPlant)}"
                                  disabled="#{!currentPowerPlant.canPowerCities()}"/>
             </div>
         </ui:repeat>

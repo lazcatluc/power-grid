@@ -6,20 +6,23 @@ import org.junit.Test;
 
 import ro.powergrid.resource.ResourceType;
 
-public class PowerPlantTest {
+public class PowerPlantAdministratorTest {
+	
+	private PowerPlantAdministrator administrator = new PowerPlantAdministrator();
+	
 	@Test
 	public void adding0ResourcesShouldNotChangeAnything() throws Exception {
 		PowerPlant pp = PowerPlantBuilder.three();
-        pp.addEnergyResources(0, ResourceType.OIL);
+		administrator.stockPlant(pp, 0, ResourceType.OIL);
         
         assertTrue(pp.getEnergyResources().isEmpty());
 	}
 	
 	@Test
-	public void addingLastResourceMultipleTimesShouldUpdateEnergyResources() throws Exception  {
+	public void addingResourceMultipleTimesShouldUpdateEnergyResources() throws Exception  {
 		PowerPlant pp = PowerPlantBuilder.three();
-        pp.addEnergyResources(1, ResourceType.OIL);
-        pp.addEnergyResources(1, ResourceType.OIL);
+		administrator.stockPlant(pp, 1, ResourceType.OIL);
+		administrator.stockPlant(pp, 1, ResourceType.OIL);
         
         assertEquals(1, pp.getEnergyResources().size());
 	}
@@ -27,6 +30,6 @@ public class PowerPlantTest {
 	@Test(expected = IncorrectResourceTypeException.class)
 	public void cannotAddIncorrectResourceType() throws Exception {
 		PowerPlant pp = PowerPlantBuilder.three();
-		pp.addEnergyResources(1, ResourceType.COAL);
+		administrator.stockPlant(pp, 1, ResourceType.COAL);
 	}
 }

@@ -8,7 +8,9 @@ package ro.powergrid.plant;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Set;
+
 import ro.powergrid.resource.Resource;
 import ro.powergrid.resource.ResourceType;
 
@@ -29,22 +31,16 @@ public class PowerPlant implements Serializable {
         this.basePrice = basePrice;
         this.numberOfNecessaryResources = numberOfNecessaryResources;
         this.energyResources = new UpdateableResourceList();
-        this.acceptableResourceTypes = acceptableResourceTypes;
+        this.acceptableResourceTypes = new LinkedHashSet<>(acceptableResourceTypes);
     }
 
     /**
      *
      * @param howMany
      * @param resource
-     * @throws IncorrectResourceTypeException 
      */
-    public void addEnergyResources(int howMany, ResourceType resource) throws IncorrectResourceTypeException {
-    	if (howMany > 0) {
-    		if (!acceptsResourceType(resource)) {
-    			throw new IncorrectResourceTypeException();
-    		}
-    		getEnergyResources().add(new Resource(howMany, resource));
-    	}
+    void addEnergyResources(int howMany, ResourceType resource) {
+		getEnergyResources().add(new Resource(howMany, resource));
     }
 
     public boolean canPowerCities() {
@@ -67,16 +63,8 @@ public class PowerPlant implements Serializable {
     }
 
     void consumeResources(int numberOfNecessaryResources) {
-        while (!energyResources.isEmpty()) {
-            final Resource nextResources = getEnergyResources().iterator().next();
-            getEnergyResources().remove(nextResources);
-            if (nextResources.getValue() > numberOfNecessaryResources) {
-                getEnergyResources().add(new Resource(nextResources.getValue()
-                        - numberOfNecessaryResources, nextResources.getResourceType()));
-                return;
-            }
-            numberOfNecessaryResources -= nextResources.getValue();
-        }
+    	getEnergyResources().remove(
+    			new Resource(numberOfNecessaryResources, ResourceType.NONE));
     }
 
     /**

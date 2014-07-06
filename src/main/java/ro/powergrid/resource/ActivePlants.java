@@ -13,9 +13,11 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
 
 import ro.powergrid.plant.IncorrectResourceTypeException;
 import ro.powergrid.plant.PowerPlant;
+import ro.powergrid.plant.PowerPlantAdministrator;
 import ro.powergrid.plant.PowerPlantBuilder;
 
 /**
@@ -29,6 +31,9 @@ public class ActivePlants implements Serializable {
     
     private List<PowerPlant> plants = new ArrayList<>();
     private List<ActiveResource<?>> activeResource = new ArrayList<>();
+    
+    @Inject
+    private PowerPlantAdministrator powerPlantAdministrator;
     
     public ActivePlants() {
         plants.add(PowerPlantBuilder.three()); 
@@ -47,8 +52,8 @@ public class ActivePlants implements Serializable {
         ActiveResource<?> resource = getResource(position);
 		resource.updatePowerPlantResources();
         PowerPlant powerPlant = getPlants().get(position);
-		powerPlant.addEnergyResources(
-                resource.getAvailableResources(), 
+        powerPlantAdministrator.stockPlant(
+        		powerPlant, resource.getAvailableResources(), 
                 powerPlant.getAcceptableResourceTypes()
                         .iterator().next());
     }
@@ -73,4 +78,12 @@ public class ActivePlants implements Serializable {
     public List<PowerPlant> getPlants() {
         return plants;
     }
+
+	public PowerPlantAdministrator getPowerPlantAdministrator() {
+		return powerPlantAdministrator;
+	}
+
+	public void setPowerPlantAdministrator(PowerPlantAdministrator powerPlantAdministrator) {
+		this.powerPlantAdministrator = powerPlantAdministrator;
+	}
 }

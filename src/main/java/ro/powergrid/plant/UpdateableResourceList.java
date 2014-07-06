@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import ro.powergrid.resource.Resource;
 
-public class UpdateableResourceList extends ArrayList<Resource> {
+class UpdateableResourceList extends ArrayList<Resource> {
 
 	private static final long serialVersionUID = 6481040945419387259L;
 	
@@ -20,6 +20,26 @@ public class UpdateableResourceList extends ArrayList<Resource> {
 			}
 		}
 		return super.add(elem);
+	}
+	
+	@Override
+	public boolean remove(Object elem) {
+		if (!(elem instanceof Resource)) {
+			return false;
+		}
+		
+		int numberOfNecessaryResources = ((Resource)elem).getValue();
+		while (!isEmpty()) {
+	        final Resource nextResources = iterator().next();
+	        super.remove(nextResources);
+	        if (nextResources.getValue() > numberOfNecessaryResources) {
+	            super.add(new Resource(nextResources.getValue()
+	                    - numberOfNecessaryResources, nextResources.getResourceType()));
+	            return true;
+	        }
+	        numberOfNecessaryResources -= nextResources.getValue();
+	    }
+		return false;
 	}
 
 }

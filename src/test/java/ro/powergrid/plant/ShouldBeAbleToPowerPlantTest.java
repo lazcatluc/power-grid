@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package ro.powergrid;
+package ro.powergrid.plant;
 
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantAdministrator;
