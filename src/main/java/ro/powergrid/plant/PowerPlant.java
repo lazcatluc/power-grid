@@ -28,7 +28,7 @@ public class PowerPlant implements Serializable {
             Set<ResourceType> acceptableResourceTypes) {
         this.basePrice = basePrice;
         this.numberOfNecessaryResources = numberOfNecessaryResources;
-        this.energyResources = new ArrayList<>();
+        this.energyResources = new UpdateableResourceList();
         this.acceptableResourceTypes = acceptableResourceTypes;
     }
 
