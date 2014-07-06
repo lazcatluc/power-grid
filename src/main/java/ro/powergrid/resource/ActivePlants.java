@@ -38,6 +38,7 @@ public class ActivePlants implements Serializable {
     public ActivePlants() {
         plants.add(PowerPlantBuilder.three()); 
         plants.add(PowerPlantBuilder.four());
+        plants.add(PowerPlantBuilder.five());
         for (PowerPlant plant : plants) {
             activeResource.add(new ActiveResource<ResourceType>(
                 plant.getAcceptableResourceTypes().iterator().next()));
