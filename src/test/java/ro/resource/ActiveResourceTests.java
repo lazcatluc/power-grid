@@ -1,18 +1,18 @@
 package ro.resource;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
+
 import ro.powergrid.resource.ActiveResource;
 import ro.powergrid.resource.Resource;
 import ro.powergrid.resource.ResourceType;
 
-import static org.junit.Assert.*;
-import ro.powergrid.resource.ResourceType;
-
 public class ActiveResourceTests {
 
-    private ActiveResource createActiveResource() {
+    private ActiveResource<?> createActiveResource() {
         ResourceType notImportant = ResourceType.COAL;
-        return new ActiveResource(notImportant);
+        return new ActiveResource<ResourceType>(notImportant);
     }
 
     private void assertNotSet(Resource resource) {
@@ -21,7 +21,7 @@ public class ActiveResourceTests {
 
     @Test
     public void whenUpdatePowerPlantResources_WithoutSettingResource_TheActiveResourceIsNotSet(){
-        ActiveResource activeResource = createActiveResource();
+        ActiveResource<?> activeResource = createActiveResource();
 
         activeResource.updatePowerPlantResources();
 
@@ -33,7 +33,7 @@ public class ActiveResourceTests {
     public void whenUpdatePowerPlantResources_ItsResourceIsInherited(){
         ResourceType initialResourceType = ResourceType.COAL;
         int initialResourceAmount = 13;
-        ActiveResource activeResource = createActiveResourceWith(initialResourceType, initialResourceAmount);
+        ActiveResource<?> activeResource = createActiveResourceWith(initialResourceType, initialResourceAmount);
 
         activeResource.updatePowerPlantResources();
 
@@ -42,8 +42,8 @@ public class ActiveResourceTests {
         assertEquals(initialResourceAmount, resource.getValue());
     }
 
-    private ActiveResource createActiveResourceWith(ResourceType initialResourceType, int initianResourceAmount) {
-        ActiveResource activeResource = new ActiveResource(initialResourceType);
+    private ActiveResource<?> createActiveResourceWith(ResourceType initialResourceType, int initianResourceAmount) {
+        ActiveResource<?> activeResource = new ActiveResource<ResourceType>(initialResourceType);
         activeResource.setAvailableResources(initianResourceAmount);
         return activeResource;
     }

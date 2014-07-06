@@ -10,10 +10,10 @@ package ro.powergrid.resource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantBuilder;
 
@@ -27,18 +27,18 @@ public class ActivePlants implements Serializable {
     private static final long serialVersionUID = 2l;
     
     private List<PowerPlant> plants = new ArrayList<>();
-    private List<ActiveResource> activeResource = new ArrayList<>();
+    private List<ActiveResource<?>> activeResource = new ArrayList<>();
     
     public ActivePlants() {
         plants.add(PowerPlantBuilder.three()); 
         plants.add(PowerPlantBuilder.four());
         for (PowerPlant plant : plants) {
-            activeResource.add(new ActiveResource(
+            activeResource.add(new ActiveResource<ResourceType>(
                 plant.getAcceptableResourceTypes().iterator().next()));
         };
     }
     
-    public ActiveResource getResource(int position) {
+    public ActiveResource<?> getResource(int position) {
         return activeResource.get(position);
     }
     
@@ -53,14 +53,14 @@ public class ActivePlants implements Serializable {
     /**
      * @return the activeResource
      */
-    public List<ActiveResource> getActiveResource() {
+    public List<ActiveResource<?>> getActiveResource() {
         return activeResource;
     }
 
     /**
      * @param activeResource the activeResource to set
      */
-    public void setActiveResource(List<ActiveResource> activeResource) {
+    public void setActiveResource(List<ActiveResource<?>> activeResource) {
         this.activeResource = activeResource;
     }
 

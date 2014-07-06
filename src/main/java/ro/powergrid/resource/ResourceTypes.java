@@ -11,7 +11,9 @@ import java.util.*;
 @SessionScoped
 public class ResourceTypes implements Serializable {
 
-    private ResourceType chosenResourceType;
+	private static final long serialVersionUID = 1L;
+	
+	private ResourceType chosenResourceType;
 
     public List<ResourceType> list() {
         return getDefaultResourceTypes();
