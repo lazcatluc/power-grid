@@ -20,6 +20,7 @@ import ro.powergrid.plant.IncorrectResourceTypeException;
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantAdministrator;
 import ro.powergrid.plant.PowerPlantBuilder;
+import ro.powergrid.plant.StorageLimitExcedeedException;
 
 /**
  *
@@ -53,13 +54,14 @@ public class ActivePlants implements Serializable {
         return activeResource.get(position);
     }
     
-    public void updatePowerPlantResources(int position) throws IncorrectResourceTypeException {
+    public void updatePowerPlantResources(int position) throws IncorrectResourceTypeException, 
+    		StorageLimitExcedeedException {
         ActiveResource<?> resource = getResource(position);
 		resource.updatePowerPlantResources();
         PowerPlant powerPlant = getPlants().get(position);
-        powerPlantAdministrator.stockPlant(
-        		powerPlant, resource.getAvailableResources(), 
-        		resourceTypes.getChosenResourceType());
+		powerPlantAdministrator.stockPlant(
+				powerPlant, resource.getAvailableResources(), 
+				resourceTypes.getChosenResourceType());
     }
 
     /**

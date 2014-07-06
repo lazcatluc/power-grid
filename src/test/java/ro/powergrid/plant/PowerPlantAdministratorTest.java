@@ -33,6 +33,12 @@ public class PowerPlantAdministratorTest {
 		administrator.stockPlant(pp, 1, ResourceType.COAL);
 	}
 	
+	@Test(expected = StorageLimitExcedeedException.class)
+	public void cannotAddMoreThanDoubleTheNecessaryResources() throws Exception {
+		PowerPlant pp = PowerPlantBuilder.three();
+		administrator.stockPlant(pp, 5, ResourceType.OIL);
+	}
+	
 	@Test
 	public void addsCorrectResourceType() throws Exception {
 		PowerPlant pp = PowerPlantBuilder.five();

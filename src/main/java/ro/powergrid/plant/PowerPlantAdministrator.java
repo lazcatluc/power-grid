@@ -18,15 +18,21 @@ import ro.powergrid.resource.ResourceType;
 @ManagedBean(name = "plantAdministrator", eager = true)
 public class PowerPlantAdministrator {
 	
-    public void firePlant(PowerPlant plant) {
+    public static final int PLANT_STORAGE_FACTOR = 2;
+
+	public void firePlant(PowerPlant plant) {
         plant.consumeResources(plant.getNumberOfNecessaryResources());
     }
     
     public void stockPlant(PowerPlant plant, int howMany, 
-    		ResourceType resource) throws IncorrectResourceTypeException {
+    		ResourceType resource) throws IncorrectResourceTypeException, StorageLimitExcedeedException {
     	if (howMany > 0) {
     		if (!plant.acceptsResourceType(resource)) {
     			throw new IncorrectResourceTypeException();
+    		}
+    		if (plant.getTotalResourcesStored() + howMany > 
+    			plant.getNumberOfNecessaryResources()*PLANT_STORAGE_FACTOR) {
+    			throw new StorageLimitExcedeedException();
     		}
     		plant.getEnergyResources().add(new Resource(howMany, resource));
     	}
