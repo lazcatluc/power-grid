@@ -1,28 +1,36 @@
-<ui:composition
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:c="http://java.sun.com/jsp/jstl/core">
-    <h:form>
-        <ui:repeat value="#{activePlants.activeResource}" var="activeResource"
-                   varStatus="status">
-            <c:set var="currentPowerPlant" value="#{activePlants.plants.get(status.index)}"></c:set>
-            <h3 class="plant-card-title">Plant No: #{status.index+3}</h3>
-            <div>
-                Available resources: #{currentPowerPlant.energyResources}
-                <br/>
-                Input the number of available resources for plant number #{status.index+3}
-                <h:inputText value="#{activeResource.availableResources}" />
-                <h:commandButton type="submit" value="#{msg.add}"
-                                 action="#{activePlants.updatePowerPlantResources(status.index)}"/>
-                <h:selectOneMenu value="#{resources.chosenResourceType}">
-                    <f:selectItems value="#{resources.getFilteredResourceTypes(currentPowerPlant)}" />
-                </h:selectOneMenu>
-                <h:commandButton type="submit" value="Power the plant!"
-                                 action="#{plantAdministrator.firePlant(currentPowerPlant)}"
-                                 disabled="#{!currentPowerPlant.canPowerCities()}"/>
-            </div>
-        </ui:repeat>
-    </h:form>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<ui:repeat value="#{activePlants.activeResource}" var="activeResource"
+		varStatus="status">
+		<c:set var="currentPowerPlant"
+			value="#{activePlants.plants.get(status.index)}"></c:set>
+		<h3 class="plant-card-title">Plant No: #{status.index+3}</h3>
+		<h:form>
+			<div>
+				Available resources: #{currentPowerPlant.energyResources} <br />
+				Input the number of available resources for plant number
+				#{status.index+3}
+				<h:inputText value="#{activeResource.availableResources}"
+					validator="#{activePlants.plantStorageValidator(currentPowerPlant).availableResourcesValidator}"
+					validatorMessage="#{msg.plantOverStocked}" />
+				<h:commandButton value="#{msg.add}">
+					<f:ajax event="click" execute="@form" render="@form"
+						listener="#{activePlants.updatePowerPlantResources(status.index)}" />
+				</h:commandButton>
+
+				<h:selectOneMenu value="#{resources.chosenResourceType}">
+					<f:selectItems
+						value="#{resources.getFilteredResourceTypes(currentPowerPlant)}" />
+				</h:selectOneMenu>
+				<h:commandButton type="submit" value="Power the plant!"
+					action="#{plantAdministrator.firePlant(currentPowerPlant)}"
+					disabled="#{!currentPowerPlant.canPowerCities()}" />
+			</div>
+		</h:form>
+	</ui:repeat>
+
 </ui:composition>

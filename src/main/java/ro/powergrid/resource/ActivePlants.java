@@ -11,9 +11,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
 import ro.powergrid.plant.IncorrectResourceTypeException;
@@ -39,6 +43,10 @@ public class ActivePlants implements Serializable {
     
     @ManagedProperty(value="#{resources}")
     private ResourceTypes resourceTypes;
+    
+    public PlantStorageValidator plantStorageValidator(PowerPlant powerPlant) {
+    	return new PlantStorageValidator(powerPlant, powerPlantAdministrator);
+    }
     
     public ActivePlants() {
         plants.add(PowerPlantBuilder.three()); 

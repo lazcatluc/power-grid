@@ -28,13 +28,18 @@ public class PowerPlantAdministrator {
     		ResourceType resource) throws IncorrectResourceTypeException, StorageLimitExcedeedException {
     	if (howMany > 0) {
     		if (!plant.acceptsResourceType(resource)) {
-    			throw new IncorrectResourceTypeException();
+    			throw new IncorrectResourceTypeException(resource.toString());
     		}
-    		if (plant.getTotalResourcesStored() + howMany > 
-    			plant.getNumberOfNecessaryResources()*PLANT_STORAGE_FACTOR) {
-    			throw new StorageLimitExcedeedException();
+    		if (!canStockPlant(plant, howMany)) {
+    			throw new StorageLimitExcedeedException(String.valueOf(howMany));
     		}
     		plant.getEnergyResources().add(new Resource(howMany, resource));
     	}
+    }
+    
+    public boolean canStockPlant(PowerPlant plant, int howMany) {
+		return plant.getTotalResourcesStored() + howMany <= 
+			plant.getNumberOfNecessaryResources()*PLANT_STORAGE_FACTOR;
+
     }
 }
