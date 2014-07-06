@@ -38,7 +38,9 @@ public class PowerPlant implements Serializable {
      * @param resource
      */
     public void addEnergyResources(int howMany, ResourceType resource) {
-        getEnergyResources().add(new Resource(howMany, resource));
+    	if (howMany > 0) {
+    		getEnergyResources().add(new Resource(howMany, resource));
+    	}
     }
 
     public boolean canPowerCities() {

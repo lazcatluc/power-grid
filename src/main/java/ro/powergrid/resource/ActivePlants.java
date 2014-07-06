@@ -43,10 +43,12 @@ public class ActivePlants implements Serializable {
     }
     
     public void updatePowerPlantResources(int position) {
-        getResource(position).updatePowerPlantResources();
-        getPlants().get(position).addEnergyResources(
-                getResource(position).getAvailableResources(), 
-                getPlants().get(position).getAcceptableResourceTypes()
+        ActiveResource<?> resource = getResource(position);
+		resource.updatePowerPlantResources();
+        PowerPlant powerPlant = getPlants().get(position);
+		powerPlant.addEnergyResources(
+                resource.getAvailableResources(), 
+                powerPlant.getAcceptableResourceTypes()
                         .iterator().next());
     }
 
