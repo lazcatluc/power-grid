@@ -14,6 +14,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import ro.powergrid.plant.IncorrectResourceTypeException;
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantBuilder;
 
@@ -42,7 +43,7 @@ public class ActivePlants implements Serializable {
         return activeResource.get(position);
     }
     
-    public void updatePowerPlantResources(int position) {
+    public void updatePowerPlantResources(int position) throws IncorrectResourceTypeException {
         ActiveResource<?> resource = getResource(position);
 		resource.updatePowerPlantResources();
         PowerPlant powerPlant = getPlants().get(position);

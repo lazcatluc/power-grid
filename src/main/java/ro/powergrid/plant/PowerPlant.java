@@ -36,9 +36,13 @@ public class PowerPlant implements Serializable {
      *
      * @param howMany
      * @param resource
+     * @throws IncorrectResourceTypeException 
      */
-    public void addEnergyResources(int howMany, ResourceType resource) {
+    public void addEnergyResources(int howMany, ResourceType resource) throws IncorrectResourceTypeException {
     	if (howMany > 0) {
+    		if (!acceptsResourceType(resource)) {
+    			throw new IncorrectResourceTypeException();
+    		}
     		getEnergyResources().add(new Resource(howMany, resource));
     	}
     }
