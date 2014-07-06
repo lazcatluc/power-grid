@@ -32,4 +32,13 @@ public class PowerPlantAdministratorTest {
 		PowerPlant pp = PowerPlantBuilder.three();
 		administrator.stockPlant(pp, 1, ResourceType.COAL);
 	}
+	
+	@Test
+	public void addsCorrectResourceType() throws Exception {
+		PowerPlant pp = PowerPlantBuilder.five();
+		administrator.stockPlant(pp, 2, ResourceType.COAL);
+		administrator.stockPlant(pp, 2, ResourceType.OIL);
+		
+		assertEquals(2, pp.getEnergyResources().size());
+	}
 }

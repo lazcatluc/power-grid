@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 
@@ -35,6 +36,9 @@ public class ActivePlants implements Serializable {
     @Inject
     private PowerPlantAdministrator powerPlantAdministrator;
     
+    @ManagedProperty(value="#{resources}")
+    private ResourceTypes resourceTypes;
+    
     public ActivePlants() {
         plants.add(PowerPlantBuilder.three()); 
         plants.add(PowerPlantBuilder.four());
@@ -55,8 +59,7 @@ public class ActivePlants implements Serializable {
         PowerPlant powerPlant = getPlants().get(position);
         powerPlantAdministrator.stockPlant(
         		powerPlant, resource.getAvailableResources(), 
-                powerPlant.getAcceptableResourceTypes()
-                        .iterator().next());
+        		resourceTypes.getChosenResourceType());
     }
 
     /**
@@ -86,5 +89,13 @@ public class ActivePlants implements Serializable {
 
 	public void setPowerPlantAdministrator(PowerPlantAdministrator powerPlantAdministrator) {
 		this.powerPlantAdministrator = powerPlantAdministrator;
+	}
+
+	public ResourceTypes getResourceTypes() {
+		return resourceTypes;
+	}
+
+	public void setResourceTypes(ResourceTypes resourceTypes) {
+		this.resourceTypes = resourceTypes;
 	}
 }
