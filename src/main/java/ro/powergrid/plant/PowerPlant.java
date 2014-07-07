@@ -24,13 +24,16 @@ public class PowerPlant implements Serializable {
 
     private final int basePrice;
     private final int numberOfNecessaryResources;
+    private final int numberOfCitiesPowered;
     private Collection<Resource> energyResources;
     private Set<ResourceType> acceptableResourceTypes;
 
-    public PowerPlant(int basePrice, int numberOfNecessaryResources, 
+    public PowerPlant(int basePrice, int numberOfNecessaryResources,
+    		int numberOfCitiesPowered,
             Set<ResourceType> acceptableResourceTypes) {
         this.basePrice = basePrice;
         this.numberOfNecessaryResources = numberOfNecessaryResources;
+        this.numberOfCitiesPowered = numberOfCitiesPowered;
         this.energyResources = new UpdateableResourceList();
         this.acceptableResourceTypes = new LinkedHashSet<>(acceptableResourceTypes);
     }
@@ -113,5 +116,9 @@ public class PowerPlant implements Serializable {
 		if (basePrice != other.basePrice)
 			return false;
 		return true;
+	}
+
+	public int getNumberOfCitiesPowered() {
+		return numberOfCitiesPowered;
 	}    
 }

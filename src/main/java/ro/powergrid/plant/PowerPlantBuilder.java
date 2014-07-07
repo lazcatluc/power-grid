@@ -17,10 +17,16 @@ import ro.powergrid.resource.ResourceType;
 public class PowerPlantBuilder {
     private int basePrice;
     private int necessaryResources;
+    private int numberOfCitiesPowered = 1;
     private Set<ResourceType> resourceTypes = new HashSet<>();
     
     public PowerPlantBuilder withBasePrice(int basePrice) {
         this.basePrice = basePrice;
+        return this;
+    }
+    
+    public PowerPlantBuilder withNumberOfCitiesPowered(int numberOfCitiesPowered) {
+        this.numberOfCitiesPowered = numberOfCitiesPowered;
         return this;
     }
     
@@ -35,17 +41,20 @@ public class PowerPlantBuilder {
     }
     
     public PowerPlant build() {
-        return new PowerPlant(basePrice, necessaryResources, resourceTypes);
+        return new PowerPlant(basePrice, necessaryResources, 
+        		numberOfCitiesPowered, resourceTypes);
     }
     
     public static PowerPlant three() {
         return new PowerPlantBuilder().withBasePrice(3)
-                .withNecessaryResources(2).withResourceType(ResourceType.OIL).build();
+                .withNecessaryResources(2)
+                .withResourceType(ResourceType.OIL).build();
     }
     
     public static PowerPlant four() {
         return new PowerPlantBuilder().withBasePrice(4)
-                .withNecessaryResources(2).withResourceType(ResourceType.COAL).build();
+                .withNecessaryResources(2)
+        		.withResourceType(ResourceType.COAL).build();
     }
     
     public static PowerPlant five() {

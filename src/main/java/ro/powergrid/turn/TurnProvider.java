@@ -18,10 +18,10 @@ public class TurnProvider implements Serializable {
 	}
 	
 	public void nextTurn() {
-		turn = turn.setNewTurn();
+		turn = turn.getNewTurn();
 	}
 	
 	public void nextPhase() {
-		turn.setNewPhase();
+		turn = turn.getNewPhase();
 	}
 }

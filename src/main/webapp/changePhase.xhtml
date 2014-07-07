@@ -17,4 +17,8 @@
         	action="#{turn.nextTurn}"
         	rendered="#{!turn.turn.hasNewPhase()}"/>
     </h:form>
+    <h:outputFormat rendered="#{turn.turn.currentPhase == 'POWER'}" 
+    		id="poweredCities" value="#{msg.poweredCities}">
+   		<f:param value="#{turn.turn.maximumNumberOfCitiesPowered}" />
+  	</h:outputFormat>
 </ui:composition>

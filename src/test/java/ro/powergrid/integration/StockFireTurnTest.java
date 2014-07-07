@@ -68,6 +68,7 @@ public class StockFireTurnTest {
 		
 		turnProvider.nextPhase();
 		firePlant(0);
+		assertEquals(1, turnProvider.getTurn().getMaximumNumberOfCitiesPowered());
 		assertFalse(plantFirer.canFirePlant(plant));
 		assertFalse(plantStocker.canStockPlant(plant));
 		
@@ -94,5 +95,16 @@ public class StockFireTurnTest {
 		firePlant(2);
 		
 		assertTrue(plant.getEnergyResources().isEmpty());
+	}
+	
+	@Test
+	public void stockTwoPlantsAndFireThemPowersTwoCities() throws Exception {
+		stockPlant(0, 2);
+		stockPlant(1, 2);
+		turnProvider.nextPhase();
+		firePlant(0);
+		firePlant(1);
+		
+		assertEquals(2, turnProvider.getTurn().getMaximumNumberOfCitiesPowered());
 	}
 }

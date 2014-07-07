@@ -9,55 +9,43 @@ import static ro.powergrid.turn.Phase.*;
 
 public class TurnImpl implements Turn, Serializable, Cloneable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3L;
 	
 	private static final Phase[] ORDERED_PHASES = {/*PLANTS,*/ RESOURCES,/* CITIES,*/ POWER}; 
 	
 	private final int turnId;
-	private int phaseId;
+	private final int phaseId;
+	private int maximumNumberOfCitiesPowered;
 	private final Set<PowerPlant> plantsFired = new HashSet<PowerPlant>();
 	
 	public TurnImpl() {
 		turnId=0;
+		phaseId=0;
 	}
 	
 	public TurnImpl(int turnId) {
 		this.turnId=turnId;
+		phaseId=0;
+	}
+	
+	public TurnImpl(int turnId, int phaseId) {
+		this.turnId=turnId;
+		this.phaseId=phaseId;
 	}
 
 	@Override
-	public TurnImpl setNewTurn() {
+	public TurnImpl getNewTurn() {
 		return new TurnImpl(turnId+1);
 	}
 
 	@Override
-	public Phase setNewPhase() {
-		phaseId++;
-		return getCurrentPhase();
+	public TurnImpl getNewPhase() {
+		return new TurnImpl(turnId, phaseId+1);		
 	}
 
 	@Override
 	public Phase getCurrentPhase() {
 		return ORDERED_PHASES[phaseId];
-	}
-
-	@Override
-	public int hashCode() {
-		return turnId;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TurnImpl other = (TurnImpl) obj;
-		if (turnId != other.turnId)
-			return false;
-		return true;
 	}
 
 	@Override
@@ -68,6 +56,7 @@ public class TurnImpl implements Turn, Serializable, Cloneable {
 	@Override
 	public void setFired(PowerPlant plant) {
 		plantsFired.add(plant);
+		maximumNumberOfCitiesPowered += plant.getNumberOfCitiesPowered();
 	}
 
 	@Override
@@ -75,6 +64,9 @@ public class TurnImpl implements Turn, Serializable, Cloneable {
 		return phaseId < ORDERED_PHASES.length-1;
 	}
 
-	
+	@Override
+	public int getMaximumNumberOfCitiesPowered() {
+		return maximumNumberOfCitiesPowered;
+	}
 
 }

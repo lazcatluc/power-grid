@@ -44,7 +44,7 @@
 
 				<h:commandButton value="#{msg.powerThePlant}"
 					rendered="#{plantFirer.canFirePlant(currentPowerPlant)}">
-					<f:ajax event="click" render="@form"
+					<f:ajax event="click" render="@form :poweredCities"
 						listener="#{plantFirer.firePlant(currentPowerPlant)}" />
 				</h:commandButton>
 			</h:form>
