@@ -17,6 +17,7 @@ import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 
 import ro.powergrid.plant.IncorrectResourceTypeException;
+import ro.powergrid.plant.InvalidPhaseActionException;
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantAdministrator;
 import ro.powergrid.plant.PowerPlantBuilder;
@@ -59,7 +60,7 @@ public class ActivePlants implements Serializable {
     }
     
     public void updatePowerPlantResources(int position) throws IncorrectResourceTypeException, 
-    		StorageLimitExcedeedException {
+    		StorageLimitExcedeedException, InvalidPhaseActionException {
         ActiveResource<?> resource = getResource(position);
 		resource.updatePowerPlantResources();
         PowerPlant powerPlant = getPlants().get(position);

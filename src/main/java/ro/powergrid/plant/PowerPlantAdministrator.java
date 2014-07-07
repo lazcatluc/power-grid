@@ -6,6 +6,8 @@
 
 package ro.powergrid.plant;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
@@ -19,9 +21,11 @@ import ro.powergrid.turn.Turn;
  * @author Catalin
  */
 @ManagedBean(name = "plantAdministrator", eager = true)
-public class PowerPlantAdministrator {
+public class PowerPlantAdministrator implements Serializable {
 	
-    public static final int PLANT_STORAGE_FACTOR = 2;
+	private static final long serialVersionUID = -841220624016824861L;
+
+	public static final int PLANT_STORAGE_FACTOR = 2;
     
     @Inject
     private Turn turn;
@@ -46,7 +50,10 @@ public class PowerPlantAdministrator {
     
     public void stockPlant(PowerPlant plant, int howMany, 
     		ResourceType resource) throws IncorrectResourceTypeException, 
-    		StorageLimitExcedeedException {
+    		StorageLimitExcedeedException, InvalidPhaseActionException {
+    	if (turn.getCurrentPhase() != Phase.RESOURCES) {
+    		throw new InvalidPhaseActionException(turn.getCurrentPhase().toString());
+    	}
     	if (howMany > 0) {
     		if (!plant.acceptsResourceType(resource)) {
     			throw new IncorrectResourceTypeException(resource.toString());
@@ -59,7 +66,8 @@ public class PowerPlantAdministrator {
     }
     
     public boolean canStockPlant(PowerPlant plant, int howMany) {
-		return plant.getTotalResourcesStored() + howMany <= 
+		return turn.getCurrentPhase() == Phase.RESOURCES &&
+			plant.getTotalResourcesStored() + howMany <= 
 			plant.getNumberOfNecessaryResources()*PLANT_STORAGE_FACTOR;
 
     }
