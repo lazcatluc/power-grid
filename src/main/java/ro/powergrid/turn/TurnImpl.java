@@ -11,7 +11,7 @@ public class TurnImpl implements Turn, Serializable, Cloneable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static final Phase[] ORDERED_PHASES = {/*PLANTS, RESOURCES, CITIES,*/ POWER}; 
+	private static final Phase[] ORDERED_PHASES = {/*PLANTS,*/ RESOURCES,/* CITIES,*/ POWER}; 
 	
 	private final int turnId;
 	private int phaseId;
@@ -68,6 +68,11 @@ public class TurnImpl implements Turn, Serializable, Cloneable {
 	@Override
 	public void setFired(PowerPlant plant) {
 		plantsFired.add(plant);
+	}
+
+	@Override
+	public boolean hasNewPhase() {
+		return phaseId < ORDERED_PHASES.length-1;
 	}
 
 	

@@ -14,13 +14,11 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.inject.Inject;
 
 import ro.powergrid.plant.IncorrectResourceTypeException;
 import ro.powergrid.plant.InvalidPhaseActionException;
 import ro.powergrid.plant.PlantStocker;
 import ro.powergrid.plant.PowerPlant;
-import ro.powergrid.plant.PowerPlantAdministrator;
 import ro.powergrid.plant.PowerPlantBuilder;
 import ro.powergrid.plant.StorageLimitExcedeedException;
 
@@ -36,7 +34,7 @@ public class ActivePlants implements Serializable {
     private List<PowerPlant> plants = new ArrayList<>();
     private List<ActiveResource<?>> activeResource = new ArrayList<>();
     
-    @Inject
+    @ManagedProperty(value="#{plantStocker}")
     private PlantStocker powerPlantAdministrator;
     
     @ManagedProperty(value="#{resources}")

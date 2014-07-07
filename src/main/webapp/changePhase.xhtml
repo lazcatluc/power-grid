@@ -1,0 +1,20 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+    <h:form>
+    	<h:outputFormat value="#{msg.currentPhase}">
+    		<f:param value="#{turn.turn.currentPhase}" />
+    	</h:outputFormat>
+
+        <h:commandButton type="submit" 
+        	value="#{msg.nextPhase}" 
+        	action="#{turn.nextPhase}"
+        	rendered="#{turn.turn.hasNewPhase()}"/>
+        <h:commandButton type="submit" 
+        	value="#{msg.nextTurn}" 
+        	action="#{turn.nextTurn}"
+        	rendered="#{!turn.turn.hasNewPhase()}"/>
+    </h:form>
+</ui:composition>

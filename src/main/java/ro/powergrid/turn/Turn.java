@@ -5,7 +5,7 @@ import ro.powergrid.plant.PowerPlant;
 public interface Turn {
 	public Turn setNewTurn();
 	public Phase setNewPhase();
-	
+	public boolean hasNewPhase();
 	public Phase getCurrentPhase();
 	public boolean hasFired(PowerPlant plant);
 	void setFired(PowerPlant plant);

@@ -8,13 +8,10 @@ package ro.powergrid.plant;
 
 import java.io.Serializable;
 
-import javax.faces.bean.ManagedBean;
-import javax.inject.Inject;
+import javax.faces.bean.ManagedProperty;
 
-import ro.powergrid.resource.Resource;
-import ro.powergrid.resource.ResourceType;
-import ro.powergrid.turn.Phase;
 import ro.powergrid.turn.Turn;
+import ro.powergrid.turn.TurnProvider;
 
 /**
  *
@@ -26,14 +23,18 @@ public abstract class PowerPlantAdministrator implements Serializable {
 
 	public static final int PLANT_STORAGE_FACTOR = 2;
     
-    @Inject
-    private Turn turn;
+    @ManagedProperty(value="#{turn}")
+    private TurnProvider turnProvider;
 
 	public Turn getTurn() {
-		return turn;
+		return turnProvider.getTurn();
+	}
+	
+	public TurnProvider getTurnProvider() {
+		return turnProvider;
 	}
 
-	public void setTurn(Turn turn) {
-		this.turn = turn;
+	public void setTurnProvider(TurnProvider turnProvider) {
+		this.turnProvider = turnProvider;
 	}
 }

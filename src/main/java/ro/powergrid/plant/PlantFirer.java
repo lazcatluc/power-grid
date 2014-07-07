@@ -1,10 +1,12 @@
 package ro.powergrid.plant;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import ro.powergrid.turn.Phase;
 
 @ManagedBean(name = "plantFirer", eager = true)
+@SessionScoped
 public class PlantFirer extends PowerPlantAdministrator {
 
 	private static final long serialVersionUID = 1L;

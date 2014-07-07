@@ -20,28 +20,30 @@
 					<f:param value="#{currentPowerPlant.energyResources}" />
 				</h:outputFormat>
 				<br />
-				<h:outputFormat value="#{msg.inputAvailableResources}">
-					<f:param value="#{status.index+3}" />
-				</h:outputFormat>
+				<h:panelGroup rendered="#{plantStocker.canStockPlant(currentPowerPlant)}">
+					<h:outputFormat value="#{msg.inputAvailableResources}">
+						<f:param value="#{status.index+3}" />
+					</h:outputFormat>
 
-				<h:inputText id="inputAvailableResources"
-					value="#{activeResource.availableResources}"
-					validator="#{activePlants.plantStorageValidator(currentPowerPlant).availableResourcesValidator}"
-					validatorMessage="#{msg.plantOverStocked}" />
-				<h:message for="inputAvailableResources" />
+					<h:inputText id="inputAvailableResources"
+						value="#{activeResource.availableResources}"
+						validator="#{activePlants.plantStorageValidator(currentPowerPlant).availableResourcesValidator}"
+						validatorMessage="#{msg.plantOverStocked}" />
+					<h:message for="inputAvailableResources" />
 
-				<h:commandButton value="#{msg.add}">
-					<f:ajax event="click" execute="@form" render="@form"
-						listener="#{activePlants.updatePowerPlantResources(status.index)}" />
-				</h:commandButton>
+					<h:commandButton value="#{msg.add}">
+						<f:ajax event="click" execute="@form" render="@form"
+							listener="#{activePlants.updatePowerPlantResources(status.index)}" />
+					</h:commandButton>
 
-				<h:selectOneMenu value="#{resources.chosenResourceType}">
-					<f:selectItems
-						value="#{resources.getFilteredResourceTypes(currentPowerPlant)}" />
-				</h:selectOneMenu>
-				
+					<h:selectOneMenu value="#{resources.chosenResourceType}">
+						<f:selectItems
+							value="#{resources.getFilteredResourceTypes(currentPowerPlant)}" />
+					</h:selectOneMenu>
+				</h:panelGroup>
+
 				<h:commandButton value="#{msg.powerThePlant}"
-					disabled="#{!plantFirer.canFirePlant(currentPowerPlant)}">
+					rendered="#{plantFirer.canFirePlant(currentPowerPlant)}">
 					<f:ajax event="click" render="@form"
 						listener="#{plantFirer.firePlant(currentPowerPlant)}" />
 				</h:commandButton>

@@ -1,10 +1,11 @@
 package ro.powergrid.plant;
 
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 
 import ro.powergrid.turn.Turn;
+import ro.powergrid.turn.TurnProvider;
 
 public abstract class AdministratorTestAbstract<T extends PowerPlantAdministrator> {
 
@@ -21,7 +22,9 @@ public abstract class AdministratorTestAbstract<T extends PowerPlantAdministrato
 	public void setUp() throws Exception {
 		setPowerPlantAdministrator(makeAdministrator());
 		setTurn(mock(Turn.class));
-		getPowerPlantAdministrator().setTurn(getTurn());
+		TurnProvider provider = mock(TurnProvider.class);
+		when(provider.getTurn()).thenReturn(getTurn());
+		getPowerPlantAdministrator().setTurnProvider(provider);
 	}
 
 	public T getPowerPlantAdministrator() {

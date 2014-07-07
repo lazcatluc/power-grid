@@ -1,12 +1,14 @@
 package ro.powergrid.plant;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import ro.powergrid.resource.Resource;
 import ro.powergrid.resource.ResourceType;
 import ro.powergrid.turn.Phase;
 
 @ManagedBean(name = "plantStocker", eager = true)
+@SessionScoped
 public class PlantStocker extends PowerPlantAdministrator {
 
 	private static final long serialVersionUID = 1L;
@@ -29,6 +31,10 @@ public class PlantStocker extends PowerPlantAdministrator {
 		}
 	}
 
+	public boolean canStockPlant(PowerPlant plant) {
+		return canStockPlant(plant, 1);
+	}
+	
 	public boolean canStockPlant(PowerPlant plant, int howMany) {
 		return getTurn().getCurrentPhase() == Phase.RESOURCES
 				&& plant.getTotalResourcesStored() + howMany <= plant

@@ -7,7 +7,6 @@ import javax.faces.validator.ValidatorException;
 
 import ro.powergrid.plant.PlantStocker;
 import ro.powergrid.plant.PowerPlant;
-import ro.powergrid.plant.PowerPlantAdministrator;
 
 public class PlantStorageValidator {
 	private final PowerPlant powerPlant;
