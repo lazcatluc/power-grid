@@ -1,7 +1,10 @@
 package ro.powergrid.turn;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import ro.powergrid.plant.PowerPlant;
 import static ro.powergrid.turn.Phase.*;
 
 public class TurnImpl implements Turn, Serializable, Cloneable {
@@ -12,6 +15,7 @@ public class TurnImpl implements Turn, Serializable, Cloneable {
 	
 	private final int turnId;
 	private int phaseId;
+	private final Set<PowerPlant> plantsFired = new HashSet<PowerPlant>();
 	
 	public TurnImpl() {
 		turnId=0;
@@ -54,6 +58,16 @@ public class TurnImpl implements Turn, Serializable, Cloneable {
 		if (turnId != other.turnId)
 			return false;
 		return true;
+	}
+
+	@Override
+	public boolean hasFired(PowerPlant plant) {
+		return plantsFired.contains(plant);
+	}
+
+	@Override
+	public void setFired(PowerPlant plant) {
+		plantsFired.add(plant);
 	}
 
 	

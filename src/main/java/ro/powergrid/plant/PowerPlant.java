@@ -18,7 +18,9 @@ import ro.powergrid.resource.ResourceType;
  * @author Catalin
  */
 public class PowerPlant implements Serializable {
-    private static final long serialVersionUID = 1l;
+
+
+	private static final long serialVersionUID = 1l;
 
     private final int basePrice;
     private final int numberOfNecessaryResources;
@@ -90,4 +92,26 @@ public class PowerPlant implements Serializable {
     public int getBasePrice() {
         return basePrice;
     }
+    
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + basePrice;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PowerPlant other = (PowerPlant) obj;
+		if (basePrice != other.basePrice)
+			return false;
+		return true;
+	}    
 }

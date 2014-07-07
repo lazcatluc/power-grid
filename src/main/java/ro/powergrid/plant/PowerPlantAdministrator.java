@@ -27,7 +27,9 @@ public class PowerPlantAdministrator {
     private Turn turn;
     
     public boolean canFirePlant(PowerPlant plant) {
-    	return turn.getCurrentPhase()==Phase.POWER && plant.canPowerCities();
+    	return turn.getCurrentPhase()==Phase.POWER &&
+    			!turn.hasFired(plant) &&
+    			plant.canPowerCities();
     }
 
 	public void firePlant(PowerPlant plant) throws InvalidPhaseActionException {
@@ -35,7 +37,11 @@ public class PowerPlantAdministrator {
 		if (currentPhase != Phase.POWER) {
 			throw new InvalidPhaseActionException(currentPhase.toString());
 		}
+		if (turn.hasFired(plant)) {
+			throw new InvalidPhaseActionException(plant.toString());
+		}
         plant.consumeResources(plant.getNumberOfNecessaryResources());
+        turn.setFired(plant);
     }
     
     public void stockPlant(PowerPlant plant, int howMany, 
