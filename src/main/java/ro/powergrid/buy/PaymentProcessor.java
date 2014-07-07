@@ -4,17 +4,13 @@
  * and open the template in the editor.
  */
 
-package ro.powergrid.resource;
+package ro.powergrid.buy;
 
-import java.util.Collection;
-import ro.powergrid.plant.PowerPlant;
 
 /**
  *
  * @author Catalin
  */
-public interface PlantOwner {
-    Collection<PowerPlant> getPlants();
-    
-    void add(PowerPlant plant);
+public interface PaymentProcessor {
+    void charge(PlantOwner owner, int sum);
 }

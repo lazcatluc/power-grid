@@ -7,9 +7,6 @@
 package ro.powergrid.buy;
 
 import ro.powergrid.plant.PowerPlant;
-import ro.powergrid.resource.PaymentProcessor;
-import ro.powergrid.resource.PlantMarketplace;
-import ro.powergrid.resource.PlantOwner;
 
 /**
  *
