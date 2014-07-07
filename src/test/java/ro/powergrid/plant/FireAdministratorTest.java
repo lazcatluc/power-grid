@@ -7,7 +7,8 @@ import org.junit.Test;
 import ro.powergrid.turn.Phase;
 import ro.powergrid.turn.Turn;
 
-public class FireAdministratorTest extends AdministratorTestAbstract {
+public class FireAdministratorTest 
+	extends AdministratorTestAbstract<PlantFirer> {
 
 	@Override
 	public void setTurn(Turn turn) {
@@ -40,5 +41,10 @@ public class FireAdministratorTest extends AdministratorTestAbstract {
 		canFirePlantOnPowerPhase();
 		
 		verify(getTurn(), times(1)).setFired(PowerPlantBuilder.thirteen());
+	}
+
+	@Override
+	protected PlantFirer makeAdministrator() {
+		return new PlantFirer();
 	}
 }

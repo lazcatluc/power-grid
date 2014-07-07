@@ -6,27 +6,29 @@ import org.junit.Before;
 
 import ro.powergrid.turn.Turn;
 
-public class AdministratorTestAbstract {
+public abstract class AdministratorTestAbstract<T extends PowerPlantAdministrator> {
 
-	private PowerPlantAdministrator powerPlantAdministrator;
+	private T powerPlantAdministrator;
 	private Turn turn;
 
 	public AdministratorTestAbstract() {
 		super();
 	}
 
+	protected abstract T makeAdministrator();
+	
 	@Before
 	public void setUp() throws Exception {
-		setPowerPlantAdministrator(new PowerPlantAdministrator());
+		setPowerPlantAdministrator(makeAdministrator());
 		setTurn(mock(Turn.class));
 		getPowerPlantAdministrator().setTurn(getTurn());
 	}
 
-	public PowerPlantAdministrator getPowerPlantAdministrator() {
+	public T getPowerPlantAdministrator() {
 		return powerPlantAdministrator;
 	}
 
-	public void setPowerPlantAdministrator(PowerPlantAdministrator powerPlantAdministrator) {
+	public void setPowerPlantAdministrator(T powerPlantAdministrator) {
 		this.powerPlantAdministrator = powerPlantAdministrator;
 	}
 

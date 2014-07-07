@@ -9,7 +9,7 @@ import ro.powergrid.resource.ResourceType;
 import ro.powergrid.turn.Phase;
 import ro.powergrid.turn.Turn;
 
-public class StockAdministratorTest extends AdministratorTestAbstract {
+public class StockAdministratorTest extends AdministratorTestAbstract<PlantStocker> {
 	
 	@Override
 	public void setTurn(Turn turn) {
@@ -68,6 +68,11 @@ public class StockAdministratorTest extends AdministratorTestAbstract {
 		
 		assertFalse(getPowerPlantAdministrator()
 				.canStockPlant(PowerPlantBuilder.three(), 1));
+	}
+
+	@Override
+	protected PlantStocker makeAdministrator() { 
+		return new PlantStocker();
 	}
 }
 

@@ -18,6 +18,7 @@ import javax.inject.Inject;
 
 import ro.powergrid.plant.IncorrectResourceTypeException;
 import ro.powergrid.plant.InvalidPhaseActionException;
+import ro.powergrid.plant.PlantStocker;
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantAdministrator;
 import ro.powergrid.plant.PowerPlantBuilder;
@@ -36,7 +37,7 @@ public class ActivePlants implements Serializable {
     private List<ActiveResource<?>> activeResource = new ArrayList<>();
     
     @Inject
-    private PowerPlantAdministrator powerPlantAdministrator;
+    private PlantStocker powerPlantAdministrator;
     
     @ManagedProperty(value="#{resources}")
     private ResourceTypes resourceTypes;
@@ -90,11 +91,11 @@ public class ActivePlants implements Serializable {
         return plants;
     }
 
-	public PowerPlantAdministrator getPowerPlantAdministrator() {
+	public PlantStocker getPowerPlantAdministrator() {
 		return powerPlantAdministrator;
 	}
 
-	public void setPowerPlantAdministrator(PowerPlantAdministrator powerPlantAdministrator) {
+	public void setPowerPlantAdministrator(PlantStocker powerPlantAdministrator) {
 		this.powerPlantAdministrator = powerPlantAdministrator;
 	}
 

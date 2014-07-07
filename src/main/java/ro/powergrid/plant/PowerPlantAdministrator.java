@@ -20,8 +20,7 @@ import ro.powergrid.turn.Turn;
  *
  * @author Catalin
  */
-@ManagedBean(name = "plantAdministrator", eager = true)
-public class PowerPlantAdministrator implements Serializable {
+public abstract class PowerPlantAdministrator implements Serializable {
 	
 	private static final long serialVersionUID = -841220624016824861L;
 
@@ -29,48 +28,6 @@ public class PowerPlantAdministrator implements Serializable {
     
     @Inject
     private Turn turn;
-    
-    public boolean canFirePlant(PowerPlant plant) {
-    	return turn.getCurrentPhase()==Phase.POWER &&
-    			!turn.hasFired(plant) &&
-    			plant.canPowerCities();
-    }
-
-	public void firePlant(PowerPlant plant) throws InvalidPhaseActionException {
-		Phase currentPhase = turn.getCurrentPhase();
-		if (currentPhase != Phase.POWER) {
-			throw new InvalidPhaseActionException(currentPhase.toString());
-		}
-		if (turn.hasFired(plant)) {
-			throw new InvalidPhaseActionException(plant.toString());
-		}
-        plant.consumeResources(plant.getNumberOfNecessaryResources());
-        turn.setFired(plant);
-    }
-    
-    public void stockPlant(PowerPlant plant, int howMany, 
-    		ResourceType resource) throws IncorrectResourceTypeException, 
-    		StorageLimitExcedeedException, InvalidPhaseActionException {
-    	if (turn.getCurrentPhase() != Phase.RESOURCES) {
-    		throw new InvalidPhaseActionException(turn.getCurrentPhase().toString());
-    	}
-    	if (howMany > 0) {
-    		if (!plant.acceptsResourceType(resource)) {
-    			throw new IncorrectResourceTypeException(resource.toString());
-    		}
-    		if (!canStockPlant(plant, howMany)) {
-    			throw new StorageLimitExcedeedException(String.valueOf(howMany));
-    		}
-    		plant.getEnergyResources().add(new Resource(howMany, resource));
-    	}
-    }
-    
-    public boolean canStockPlant(PowerPlant plant, int howMany) {
-		return turn.getCurrentPhase() == Phase.RESOURCES &&
-			plant.getTotalResourcesStored() + howMany <= 
-			plant.getNumberOfNecessaryResources()*PLANT_STORAGE_FACTOR;
-
-    }
 
 	public Turn getTurn() {
 		return turn;

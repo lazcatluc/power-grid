@@ -41,9 +41,9 @@
 				</h:selectOneMenu>
 				
 				<h:commandButton value="#{msg.powerThePlant}"
-					disabled="#{!plantAdministrator.canFirePlant(currentPowerPlant)}">
+					disabled="#{!plantFirer.canFirePlant(currentPowerPlant)}">
 					<f:ajax event="click" render="@form"
-						listener="#{plantAdministrator.firePlant(currentPowerPlant)}" />
+						listener="#{plantFirer.firePlant(currentPowerPlant)}" />
 				</h:commandButton>
 			</h:form>
 		</div>

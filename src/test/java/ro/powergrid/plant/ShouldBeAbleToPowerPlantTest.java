@@ -6,11 +6,10 @@
 
 package ro.powergrid.plant;
 
-import static org.mockito.Mockito.*;
-import ro.powergrid.plant.PowerPlant;
-import ro.powergrid.plant.PowerPlantAdministrator;
-import ro.powergrid.plant.PowerPlantBuilder;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
@@ -23,16 +22,14 @@ import ro.powergrid.turn.Turn;
  *
  * @author Catalin
  */
-public class ShouldBeAbleToPowerPlantTest {
+public class ShouldBeAbleToPowerPlantTest extends AdministratorTestAbstract<PlantFirer> {
 	
-	private PowerPlantAdministrator getAdministrator() {
-		PowerPlantAdministrator ppa = new PowerPlantAdministrator();
-		Turn turn = mock(Turn.class);
-		ppa.setTurn(turn);
-		when(turn.getCurrentPhase()).thenReturn(Phase.POWER);
-		return ppa;
+	@Override
+	public void setTurn(Turn turn) {
+		super.setTurn(turn);
+		when(getTurn().getCurrentPhase()).thenReturn(Phase.POWER);
 	}
-    
+	
     @Test
     public void powerPlant3CanBePoweredWith2Oil() throws Exception {
         PowerPlant pp = PowerPlantBuilder.three();
@@ -62,7 +59,7 @@ public class ShouldBeAbleToPowerPlantTest {
         PowerPlant pp = PowerPlantBuilder.three();
         pp.addEnergyResources(3, ResourceType.OIL);
         
-        getAdministrator().firePlant(pp);
+        getPowerPlantAdministrator().firePlant(pp);
         
         assertEquals(1, pp.getEnergyResources().size());
         assertEquals(1, pp.getTotalResourcesStored());
@@ -82,4 +79,9 @@ public class ShouldBeAbleToPowerPlantTest {
         
         assertFalse(pp.canPowerCities());
     }
+
+	@Override
+	protected PlantFirer makeAdministrator() {
+		return new PlantFirer();
+	}
 }

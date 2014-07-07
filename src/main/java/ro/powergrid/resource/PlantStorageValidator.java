@@ -5,21 +5,22 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import ro.powergrid.plant.PlantStocker;
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantAdministrator;
 
 public class PlantStorageValidator {
 	private final PowerPlant powerPlant;
-	private final PowerPlantAdministrator powerPlantAdministrator;
+	private final PlantStocker plantStocker;
 
-	public PlantStorageValidator(PowerPlant powerPlant, PowerPlantAdministrator powerPlantAdministrator) {
+	public PlantStorageValidator(PowerPlant powerPlant, PlantStocker plantStocker) {
 		this.powerPlant = powerPlant;
-		this.powerPlantAdministrator = powerPlantAdministrator;
+		this.plantStocker = plantStocker;
 	}
 	
 	public void availableResourcesValidator(FacesContext facesContext, 
 	    		UIComponent uiComponent, Object params) throws ValidatorException {
-    	if (!powerPlantAdministrator.canStockPlant(powerPlant, Integer.parseInt(params.toString()))) {
+    	if (!plantStocker.canStockPlant(powerPlant, Integer.parseInt(params.toString()))) {
     		throw new ValidatorException(new FacesMessage());
     	}   
     }
