@@ -8,7 +8,7 @@ public class TurnImpl implements Turn, Serializable, Cloneable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static final Phase[] ORDERED_PHASES = {PLANTS, RESOURCES, CITIES, POWER}; 
+	private static final Phase[] ORDERED_PHASES = {/*PLANTS, RESOURCES, CITIES,*/ POWER}; 
 	
 	private final int turnId;
 	private int phaseId;
@@ -39,10 +39,7 @@ public class TurnImpl implements Turn, Serializable, Cloneable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + turnId;
-		return result;
+		return turnId;
 	}
 
 	@Override

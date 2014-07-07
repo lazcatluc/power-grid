@@ -7,9 +7,12 @@
 package ro.powergrid.plant;
 
 import javax.faces.bean.ManagedBean;
+import javax.inject.Inject;
 
 import ro.powergrid.resource.Resource;
 import ro.powergrid.resource.ResourceType;
+import ro.powergrid.turn.Phase;
+import ro.powergrid.turn.Turn;
 
 /**
  *
@@ -19,13 +22,25 @@ import ro.powergrid.resource.ResourceType;
 public class PowerPlantAdministrator {
 	
     public static final int PLANT_STORAGE_FACTOR = 2;
+    
+    @Inject
+    private Turn turn;
+    
+    public boolean canFirePlant(PowerPlant plant) {
+    	return turn.getCurrentPhase()==Phase.POWER && plant.canPowerCities();
+    }
 
-	public void firePlant(PowerPlant plant) {
+	public void firePlant(PowerPlant plant) throws InvalidPhaseActionException {
+		Phase currentPhase = turn.getCurrentPhase();
+		if (currentPhase != Phase.POWER) {
+			throw new InvalidPhaseActionException(currentPhase.toString());
+		}
         plant.consumeResources(plant.getNumberOfNecessaryResources());
     }
     
     public void stockPlant(PowerPlant plant, int howMany, 
-    		ResourceType resource) throws IncorrectResourceTypeException, StorageLimitExcedeedException {
+    		ResourceType resource) throws IncorrectResourceTypeException, 
+    		StorageLimitExcedeedException {
     	if (howMany > 0) {
     		if (!plant.acceptsResourceType(resource)) {
     			throw new IncorrectResourceTypeException(resource.toString());
@@ -42,4 +57,12 @@ public class PowerPlantAdministrator {
 			plant.getNumberOfNecessaryResources()*PLANT_STORAGE_FACTOR;
 
     }
+
+	public Turn getTurn() {
+		return turn;
+	}
+
+	public void setTurn(Turn turn) {
+		this.turn = turn;
+	}
 }

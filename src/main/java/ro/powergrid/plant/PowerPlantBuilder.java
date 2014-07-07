@@ -54,4 +54,10 @@ public class PowerPlantBuilder {
                 .withResourceType(ResourceType.COAL)
                 .withResourceType(ResourceType.OIL).build();
     }
+    
+    public static PowerPlant thirteen() {
+        return new PowerPlantBuilder().withBasePrice(13)
+                .withNecessaryResources(0)
+                .withResourceType(ResourceType.NONE).build();
+    }
 }
