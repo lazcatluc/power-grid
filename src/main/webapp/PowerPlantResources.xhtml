@@ -8,13 +8,10 @@
 		varStatus="status">
 		<c:set var="currentPowerPlant"
 			value="#{activePlants.plants.get(status.index)}"></c:set>
-		<h3 class="plant-card-title">
-			<h:outputFormat value="#{msg.powerPlantTitle}">
-				<f:param value="#{status.index+3}" />
-			</h:outputFormat>
-		</h3>
-
-		<div>
+		<div class="wrapper">
+			<div class="image">
+				<img src="#{request.contextPath}/images/plants/#{status.index+3}.png" />
+			</div>
 			<h:form>
 				<h:outputFormat value="#{msg.powerPlantAvailableResources}">
 					<f:param value="#{currentPowerPlant.energyResources}" />

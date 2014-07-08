@@ -7,10 +7,20 @@ and open the template in the editor.
     Created on : Jun 21, 2014, 4:19:08 PM
     Author     : Catalin
 */
-.power-plant div {
+.power-plant .wrapper {
     border: 1px solid green;
-    width: 300px;
-    height: 150px;
+    width: 332px;
+    height: 166px;
+    margin-bottom: 20px;    
+}
+
+.power-plant input[type="text"] {
+	width: 20px;
+}
+
+.power-plant .image {
+	float: left;
+	margin-right: 5px;
 }
 
 .plant-card-title {
