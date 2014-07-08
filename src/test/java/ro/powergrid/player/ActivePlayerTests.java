@@ -1,4 +1,4 @@
-package ro.game;
+package ro.powergrid.player;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import ro.powergrid.player.ActivePlayer;
 import ro.powergrid.resource.Resource;
 import ro.powergrid.resource.ResourceType;
 
