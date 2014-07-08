@@ -10,6 +10,7 @@ import org.junit.Test;
 import ro.powergrid.plant.PlantFirer;
 import ro.powergrid.plant.PlantStocker;
 import ro.powergrid.plant.PowerPlant;
+import ro.powergrid.plant.PowerPlantConfiguration;
 import ro.powergrid.resource.ActivePlants;
 import ro.powergrid.resource.ResourceType;
 import ro.powergrid.resource.ResourceTypes;
@@ -21,6 +22,7 @@ public class StockFireTurnTest {
 	private TurnProvider turnProvider;
 	private ActivePlants activePlants;
 	private ResourceTypes resourceTypes;
+	private PowerPlantConfiguration powerPlantConfiguration;
 	
 	@Before
 	public void setUp() {
@@ -33,6 +35,9 @@ public class StockFireTurnTest {
 		activePlants.setPowerPlantAdministrator(plantStocker);
 		resourceTypes = new ResourceTypes();
 		activePlants.setResourceTypes(resourceTypes);
+		powerPlantConfiguration = new PowerPlantConfiguration();
+		activePlants.setPowerPlantConfiguration(powerPlantConfiguration);
+		activePlants.init();
 	}
 	
 	protected void selectResourceType(PowerPlant plant, int position) {

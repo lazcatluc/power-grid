@@ -11,15 +11,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.inject.Inject;
 
 import ro.powergrid.plant.IncorrectResourceTypeException;
 import ro.powergrid.plant.InvalidPhaseActionException;
 import ro.powergrid.plant.PlantStocker;
 import ro.powergrid.plant.PowerPlant;
-import ro.powergrid.plant.PowerPlantBuilder;
+import ro.powergrid.plant.PowerPlantConfiguration;
 import ro.powergrid.plant.StorageLimitExcedeedException;
 
 /**
@@ -29,7 +31,7 @@ import ro.powergrid.plant.StorageLimitExcedeedException;
 @ManagedBean(name = "activePlants", eager = true)
 @SessionScoped
 public class ActivePlants implements Serializable {
-    private static final long serialVersionUID = 2l;
+    private static final long serialVersionUID = 3l;
     
     private List<PowerPlant> plants = new ArrayList<>();
     private List<ActiveResource<?>> activeResource = new ArrayList<>();
@@ -40,14 +42,21 @@ public class ActivePlants implements Serializable {
     @ManagedProperty(value="#{resources}")
     private ResourceTypes resourceTypes;
     
+    @Inject 
+    private PowerPlantConfiguration powerPlantConfiguration;
+    
     public PlantStorageValidator plantStorageValidator(PowerPlant powerPlant) {
     	return new PlantStorageValidator(powerPlant, powerPlantAdministrator);
     }
     
     public ActivePlants() {
-        plants.add(PowerPlantBuilder.three()); 
-        plants.add(PowerPlantBuilder.four());
-        plants.add(PowerPlantBuilder.five());
+    }
+    
+    @PostConstruct
+    public void init() {
+    	plants.add(powerPlantConfiguration.getPlant(3)); 
+        plants.add(powerPlantConfiguration.getPlant(4));
+        plants.add(powerPlantConfiguration.getPlant(5));
         for (PowerPlant plant : plants) {
             activeResource.add(new ActiveResource<ResourceType>(
                 plant.getAcceptableResourceTypes().iterator().next()));
@@ -103,5 +112,13 @@ public class ActivePlants implements Serializable {
 
 	public void setResourceTypes(ResourceTypes resourceTypes) {
 		this.resourceTypes = resourceTypes;
+	}
+
+	public PowerPlantConfiguration getPowerPlantConfiguration() {
+		return powerPlantConfiguration;
+	}
+
+	public void setPowerPlantConfiguration(PowerPlantConfiguration powerPlantConfiguration) {
+		this.powerPlantConfiguration = powerPlantConfiguration;
 	}
 }
