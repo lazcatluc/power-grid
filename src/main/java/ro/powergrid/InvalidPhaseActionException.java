@@ -1,4 +1,4 @@
-package ro.powergrid.plant;
+package ro.powergrid;
 
 public class InvalidPhaseActionException extends Exception {
 

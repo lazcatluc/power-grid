@@ -3,6 +3,8 @@ package ro.powergrid.plant;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import ro.powergrid.IncorrectResourceTypeException;
+import ro.powergrid.InvalidPhaseActionException;
 import ro.powergrid.resource.Resource;
 import ro.powergrid.resource.ResourceType;
 import ro.powergrid.turn.Phase;

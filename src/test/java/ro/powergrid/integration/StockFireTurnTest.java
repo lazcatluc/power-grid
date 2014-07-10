@@ -27,11 +27,11 @@ public class StockFireTurnTest {
 	
 	@Before
 	public void setUp() {
-		turnProvider = new TurnProvider();
+		setTurnProvider(new TurnProvider());
 		plantFirer = new PlantFirer();
 		plantStocker = new PlantStocker();
-		plantFirer.setTurnProvider(turnProvider);
-		plantStocker.setTurnProvider(turnProvider);
+		plantFirer.setTurnProvider(getTurnProvider());
+		plantStocker.setTurnProvider(getTurnProvider());
 		setActivePlants(new ActivePlants());
 		getActivePlants().setPowerPlantAdministrator(plantStocker);
 		resourceTypes = new ResourceTypes();
@@ -73,16 +73,17 @@ public class StockFireTurnTest {
 		stockPlant(0, 2);
 		assertFalse(plantStocker.canStockPlant(plant));
 		
-		turnProvider.nextPhase();
+		getTurnProvider().nextPhase();
 		firePlant(0);
-		assertEquals(1, turnProvider.getTurn().getMaximumNumberOfCitiesPowered());
+		assertEquals(1, getTurnProvider().getTurn().getMaximumNumberOfCitiesPowered());
 		assertFalse(plantFirer.canFirePlant(plant));
 		assertFalse(plantStocker.canStockPlant(plant));
 		
-		turnProvider.nextTurn();
+		getTurnProvider().nextTurn();
+		getTurnProvider().nextPhase();
 		assertFalse(plantFirer.canFirePlant(plant));
 		assertTrue(plantStocker.canStockPlant(plant));
-		turnProvider.nextPhase();
+		getTurnProvider().nextPhase();
 		
 		assertTrue(plantFirer.canFirePlant(plant));
 		firePlant(0);
@@ -99,7 +100,7 @@ public class StockFireTurnTest {
 		assertFalse(plantFirer.canFirePlant(plant));
 		assertEquals(2, plant.getEnergyResources().size());
 		
-		turnProvider.nextPhase();
+		getTurnProvider().nextPhase();
 		firePlant(2);
 		
 		assertTrue(plant.getEnergyResources().isEmpty());
@@ -110,17 +111,18 @@ public class StockFireTurnTest {
 		initActivePlants();
 		stockPlant(0, 2);
 		stockPlant(1, 2);
-		turnProvider.nextPhase();
+		getTurnProvider().nextPhase();
 		firePlant(0);
 		firePlant(1);
 		
-		assertEquals(2, turnProvider.getTurn().getMaximumNumberOfCitiesPowered());
+		assertEquals(2, getTurnProvider().getTurn().getMaximumNumberOfCitiesPowered());
 	}
 
 	private void initActivePlants() {
 		getActivePlants().addPlant(powerPlantConfiguration.getPlant(3));
 		getActivePlants().addPlant(powerPlantConfiguration.getPlant(4));
 		getActivePlants().addPlant(powerPlantConfiguration.getPlant(5));
+		turnProvider.nextPhase();
 	}
 
 	public ActivePlants getActivePlants() {
@@ -129,5 +131,13 @@ public class StockFireTurnTest {
 
 	public void setActivePlants(ActivePlants activePlants) {
 		this.activePlants = activePlants;
+	}
+
+	public TurnProvider getTurnProvider() {
+		return turnProvider;
+	}
+
+	public void setTurnProvider(TurnProvider turnProvider) {
+		this.turnProvider = turnProvider;
 	}
 }

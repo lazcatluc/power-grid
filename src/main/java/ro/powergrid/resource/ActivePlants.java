@@ -11,14 +11,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 
-import ro.powergrid.plant.IncorrectResourceTypeException;
-import ro.powergrid.plant.InvalidPhaseActionException;
+import ro.powergrid.IncorrectResourceTypeException;
+import ro.powergrid.InvalidPhaseActionException;
 import ro.powergrid.plant.PlantStocker;
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantConfiguration;

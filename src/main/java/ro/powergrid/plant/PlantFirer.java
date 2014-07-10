@@ -3,6 +3,7 @@ package ro.powergrid.plant;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import ro.powergrid.InvalidPhaseActionException;
 import ro.powergrid.turn.Phase;
 
 @ManagedBean(name = "plantFirer", eager = true)

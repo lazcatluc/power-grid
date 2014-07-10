@@ -9,12 +9,13 @@ import static ro.powergrid.turn.Phase.*;
 
 public class TurnImpl implements Turn, Serializable, Cloneable {
 	
-	private static final long serialVersionUID = 3L;
+	private static final long serialVersionUID = 4L;
 	
-	private static final Phase[] ORDERED_PHASES = {/*PLANTS,*/ RESOURCES,/* CITIES,*/ POWER}; 
+	private static final Phase[] ORDERED_PHASES = {PLANTS, RESOURCES,/* CITIES,*/ POWER}; 
 	
 	private final int turnId;
 	private final int phaseId;
+	private boolean canBuyPlant = true;
 	private int maximumNumberOfCitiesPowered;
 	private final Set<PowerPlant> plantsFired = new HashSet<PowerPlant>();
 	
@@ -67,6 +68,16 @@ public class TurnImpl implements Turn, Serializable, Cloneable {
 	@Override
 	public int getMaximumNumberOfCitiesPowered() {
 		return maximumNumberOfCitiesPowered;
+	}
+
+	@Override
+	public boolean isCanBuyPlant() {
+		return canBuyPlant;
+	}
+
+	@Override
+	public void setCanBuyPlant(boolean canBuyPlant) {
+		this.canBuyPlant = canBuyPlant;
 	}
 
 }

@@ -1,24 +1,27 @@
 package ro.powergrid.integration;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import ro.powergrid.InvalidPhaseActionException;
 import ro.powergrid.buy.ActivePlantMarket;
 import ro.powergrid.buy.TransactionalPaymentProcessor;
 import ro.powergrid.buy.TransactionalPlayerPlantBroker;
 import ro.powergrid.plant.PowerPlantBuilder;
 import ro.powergrid.player.ActivePlayer;
 import ro.powergrid.player.Player;
+import ro.powergrid.turn.TurnProvider;
 
 public class PlayerBuysPlantFromMarketTest {
 	private StockFireTurnTest activePlantsMother;
 	private SortedLayeredMarketplaceTest marketplaceMother;
 	private ActivePlayer activePlayer;
 	private ActivePlantMarket activePlantsMarket;
+	private TurnProvider turnProvider;
 
 	@Before	
 	public void setUp() {
@@ -37,9 +40,11 @@ public class PlayerBuysPlantFromMarketTest {
 				new TransactionalPlayerPlantBroker();
 		playerPlantBroker.setPaymentProcessor(new TransactionalPaymentProcessor());
 		activePlayer.setPlayerPlantBroker(playerPlantBroker);
+		turnProvider = activePlantsMother.getTurnProvider();
+		activePlayer.setTurnProvider(turnProvider);
 	}
 
-	public void buyFirstPlant() {
+	public void buyFirstPlant() throws InvalidPhaseActionException {
 		activePlayer.buyPlant(activePlantsMarket.getBuyablePlants().get(0));
 	}
 		
@@ -66,5 +71,18 @@ public class PlayerBuysPlantFromMarketTest {
 		
 		assertEquals(Collections.singletonList(PowerPlantBuilder.three()),
 				activePlantsMother.getActivePlants().getPlants());
+	}
+	
+	@Test(expected = InvalidPhaseActionException.class)
+	public void cannotBuyPlantOnResourcePhase() throws Exception {
+		turnProvider.nextPhase();
+		
+		buyFirstPlant();
+	}
+	
+	@Test(expected = InvalidPhaseActionException.class)
+	public void canOnlyBuyOnePlantPerPhase() throws Exception {
+		buyFirstPlant();
+		buyFirstPlant();
 	}
 }

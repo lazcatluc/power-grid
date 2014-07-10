@@ -4,6 +4,7 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 
+import ro.powergrid.InvalidPhaseActionException;
 import ro.powergrid.turn.Phase;
 import ro.powergrid.turn.Turn;
 

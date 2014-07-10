@@ -10,12 +10,16 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 
+import ro.powergrid.InvalidPhaseActionException;
 import ro.powergrid.buy.ActivePlantMarket;
 import ro.powergrid.buy.PlayerPlantBroker;
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.resource.ActivePlants;
 import ro.powergrid.resource.Resource;
 import ro.powergrid.resource.ResourceType;
+import ro.powergrid.turn.Phase;
+import ro.powergrid.turn.Turn;
+import ro.powergrid.turn.TurnProvider;
 
 @ManagedBean(name = "activePlayer", eager = true)
 @SessionScoped
@@ -35,13 +39,38 @@ public class ActivePlayer implements Serializable {
 	@ManagedProperty(value="#{activePlants}")
 	private ActivePlants activePlants;
 	
+	@ManagedProperty(value="#{turn}")
+    private TurnProvider turnProvider;
+
+	public Turn getTurn() {
+		return turnProvider.getTurn();
+	}
+	
+	public TurnProvider getTurnProvider() {
+		return turnProvider;
+	}
+
+	public void setTurnProvider(TurnProvider turnProvider) {
+		this.turnProvider = turnProvider;
+	}
+	
 	@Inject
 	private Player currentPlayer;
 	
-	public void buyPlant(PowerPlant powerPlant) {
+	public boolean canBuyPlants() {
+		return getTurn().getCurrentPhase() == Phase.PLANTS && 
+				getTurn().isCanBuyPlant();
+	}
+	
+	public void buyPlant(PowerPlant powerPlant) throws InvalidPhaseActionException {
+		if (!canBuyPlants()) {
+			throw new InvalidPhaseActionException(
+					getTurn().getCurrentPhase().toString());
+		}
 		playerPlantBroker.transferPlant(currentPlayer, powerPlant, 
 			activePlantMarket.getPlantMarketplace());
 		activePlants.addPlant(powerPlant);
+		getTurn().setCanBuyPlant(false);
 	}
 	
 	public void buyResources(ResourceType resourceToBuyType, int resourceToBuyAmount) {

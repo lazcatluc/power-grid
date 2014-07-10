@@ -5,6 +5,8 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
+import ro.powergrid.IncorrectResourceTypeException;
+import ro.powergrid.InvalidPhaseActionException;
 import ro.powergrid.resource.ResourceType;
 import ro.powergrid.turn.Phase;
 import ro.powergrid.turn.Turn;
