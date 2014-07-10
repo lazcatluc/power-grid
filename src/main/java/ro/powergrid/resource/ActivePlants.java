@@ -49,18 +49,10 @@ public class ActivePlants implements Serializable {
     	return new PlantStorageValidator(powerPlant, powerPlantAdministrator);
     }
     
-    public ActivePlants() {
-    }
-    
-    @PostConstruct
-    public void init() {
-    	plants.add(powerPlantConfiguration.getPlant(3)); 
-        plants.add(powerPlantConfiguration.getPlant(4));
-        plants.add(powerPlantConfiguration.getPlant(5));
-        for (PowerPlant plant : plants) {
-            activeResource.add(new ActiveResource<ResourceType>(
+    public void addPlant(PowerPlant plant) {
+    	plants.add(plant);
+    	activeResource.add(new ActiveResource<ResourceType>(
                 plant.getAcceptableResourceTypes().iterator().next()));
-        };
     }
     
     public ActiveResource<?> getResource(int position) {

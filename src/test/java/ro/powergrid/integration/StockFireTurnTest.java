@@ -32,13 +32,13 @@ public class StockFireTurnTest {
 		plantStocker = new PlantStocker();
 		plantFirer.setTurnProvider(turnProvider);
 		plantStocker.setTurnProvider(turnProvider);
-		activePlants = new ActivePlants();
-		activePlants.setPowerPlantAdministrator(plantStocker);
+		setActivePlants(new ActivePlants());
+		getActivePlants().setPowerPlantAdministrator(plantStocker);
 		resourceTypes = new ResourceTypes();
-		activePlants.setResourceTypes(resourceTypes);
+		getActivePlants().setResourceTypes(resourceTypes);
 		powerPlantConfiguration = new PowerPlantJSONConfiguration();
-		activePlants.setPowerPlantConfiguration(powerPlantConfiguration);
-		activePlants.init();
+		getActivePlants().setPowerPlantConfiguration(powerPlantConfiguration);
+
 	}
 	
 	protected void selectResourceType(PowerPlant plant, int position) {
@@ -51,23 +51,24 @@ public class StockFireTurnTest {
 	}
 	
 	protected void stockPlant(int position, int howMany, int resourcePosition) throws Exception {
-		PowerPlant plant = activePlants.getPlants().get(position);
-		activePlants.getResource(position).setAvailableResources(howMany);
+		PowerPlant plant = getActivePlants().getPlants().get(position);
+		getActivePlants().getResource(position).setAvailableResources(howMany);
 		selectResourceType(plant, resourcePosition);
 		
-		activePlants.plantStorageValidator(plant).availableResourcesValidator(
+		getActivePlants().plantStorageValidator(plant).availableResourcesValidator(
 				null, null, String.valueOf(howMany));
 		
-		activePlants.updatePowerPlantResources(position);
+		getActivePlants().updatePowerPlantResources(position);
 	}
 	
 	protected void firePlant(int position) throws Exception {
-		plantFirer.firePlant(activePlants.getPlants().get(position));
+		plantFirer.firePlant(getActivePlants().getPlants().get(position));
 	}
 	
 	@Test
 	public void stockFireFirstPlant() throws Exception {
-		PowerPlant plant = activePlants.getPlants().get(0);		
+		initActivePlants();
+		PowerPlant plant = getActivePlants().getPlants().get(0);		
 		stockPlant(0, 2);
 		stockPlant(0, 2);
 		assertFalse(plantStocker.canStockPlant(plant));
@@ -89,7 +90,8 @@ public class StockFireTurnTest {
 	
 	@Test
 	public void stockFireThirdPlantWithMultipleResourceTypes() throws Exception {
-		PowerPlant plant = activePlants.getPlants().get(2);
+		initActivePlants();
+		PowerPlant plant = getActivePlants().getPlants().get(2);
 		stockPlant(2, 1);
 		assertEquals(ResourceType.COAL, resourceTypes.getChosenResourceType());
 		stockPlant(2, 1, 1);
@@ -105,6 +107,7 @@ public class StockFireTurnTest {
 	
 	@Test
 	public void stockTwoPlantsAndFireThemPowersTwoCities() throws Exception {
+		initActivePlants();
 		stockPlant(0, 2);
 		stockPlant(1, 2);
 		turnProvider.nextPhase();
@@ -112,5 +115,19 @@ public class StockFireTurnTest {
 		firePlant(1);
 		
 		assertEquals(2, turnProvider.getTurn().getMaximumNumberOfCitiesPowered());
+	}
+
+	private void initActivePlants() {
+		getActivePlants().addPlant(powerPlantConfiguration.getPlant(3));
+		getActivePlants().addPlant(powerPlantConfiguration.getPlant(4));
+		getActivePlants().addPlant(powerPlantConfiguration.getPlant(5));
+	}
+
+	public ActivePlants getActivePlants() {
+		return activePlants;
+	}
+
+	public void setActivePlants(ActivePlants activePlants) {
+		this.activePlants = activePlants;
 	}
 }

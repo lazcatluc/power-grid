@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package ro.powergrid.buy;
+package ro.powergrid.player;
 
 import java.util.Collection;
 import ro.powergrid.plant.PowerPlant;

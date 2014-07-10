@@ -22,39 +22,39 @@ public class SortedLayeredMarketplaceTest {
 	
 	@Before
 	public void setUp() {
-		marketplace = new SortedLayeredMarketplace();
+		setMarketplace(new SortedLayeredMarketplace());
 		configuration = new PowerPlantJSONConfiguration();
-		marketplace.setPowerPlantConfiguration(configuration);
-		marketplace.init();
+		getMarketplace().setPowerPlantConfiguration(configuration);
+		getMarketplace().init();
 	}
 	
 	@Test
 	public void getsCheapestPlantsFirst() throws Exception {
-		assertPlantsEqualTo(new Integer[]{3,4,5,6}, marketplace.getBuyablePlants());
+		assertPlantsEqualTo(new Integer[]{3,4,5,6}, getMarketplace().getBuyablePlants());
 	}
 	
 	@Test
 	public void getsNextCheapestPlantsAsFuture() throws Exception {
-		assertPlantsEqualTo(new Integer[]{7,8,9,10}, marketplace.getFuturePlants());
+		assertPlantsEqualTo(new Integer[]{7,8,9,10}, getMarketplace().getFuturePlants());
 	}
 	
 	@Test
 	public void whenPlantIsRemovedNextPlantTakesItsPlace() throws Exception {
-		marketplace.removeBuyablePlant(configuration.getPlant(5));
+		getMarketplace().removeBuyablePlant(configuration.getPlant(5));
 		
-		assertPlantsEqualTo(new Integer[]{3,4,6,7}, marketplace.getBuyablePlants());
+		assertPlantsEqualTo(new Integer[]{3,4,6,7}, getMarketplace().getBuyablePlants());
 	}
 	
 	@Test
 	public void keepRemovingFirstPlantUntilWeRunOutKeepsPlantsInOrder() throws Exception {
-		PowerPlant next = marketplace.getBuyablePlants().iterator().next();
-		while (marketplace.getFuturePlants().iterator().next() != PowerPlant.NONE) {
-			marketplace.removeBuyablePlant(next);
-			next = marketplace.getBuyablePlants().iterator().next();
+		PowerPlant next = getMarketplace().getBuyablePlants().iterator().next();
+		while (getMarketplace().getFuturePlants().iterator().next() != PowerPlant.NONE) {
+			getMarketplace().removeBuyablePlant(next);
+			next = getMarketplace().getBuyablePlants().iterator().next();
 
-			assertTrue(new ArrayList<>(marketplace.getBuyablePlants())
-						.get(marketplace.getBuyablePlants().size()-1)
-						.compareTo(marketplace.getFuturePlants().iterator().next()) < 0);
+			assertTrue(new ArrayList<>(getMarketplace().getBuyablePlants())
+						.get(getMarketplace().getBuyablePlants().size()-1)
+						.compareTo(getMarketplace().getFuturePlants().iterator().next()) < 0);
 			
 		}
 					
@@ -62,17 +62,25 @@ public class SortedLayeredMarketplaceTest {
 	
 	@Test
 	public void setOfAllPlantsIsNotSorted() throws Exception {
-		ArrayList<PowerPlant> sortedList = new ArrayList<>(marketplace.getAllPlants());
+		ArrayList<PowerPlant> sortedList = new ArrayList<>(getMarketplace().getAllPlants());
 		Collections.sort(sortedList);
-		ArrayList<PowerPlant> unsortedList = new ArrayList<>(marketplace.getAllPlants());
+		ArrayList<PowerPlant> unsortedList = new ArrayList<>(getMarketplace().getAllPlants());
 		
 		assertNotEquals(sortedList, unsortedList);
 	}
 	
-	protected void assertPlantsEqualTo(Integer[] expectedPlants, 
+	public void assertPlantsEqualTo(Integer[] expectedPlants, 
 			Collection<PowerPlant> plants){
 		assertEquals(Arrays.asList(expectedPlants)
 				.stream().map(i -> configuration.getPlant(i)).collect(Collectors.toList()),
 				new ArrayList<PowerPlant>(plants));
+	}
+
+	public SortedLayeredMarketplace getMarketplace() {
+		return marketplace;
+	}
+
+	public void setMarketplace(SortedLayeredMarketplace marketplace) {
+		this.marketplace = marketplace;
 	}
 }

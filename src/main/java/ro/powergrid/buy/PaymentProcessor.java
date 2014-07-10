@@ -6,6 +6,8 @@
 
 package ro.powergrid.buy;
 
+import ro.powergrid.player.PlantOwner;
+
 
 /**
  *
