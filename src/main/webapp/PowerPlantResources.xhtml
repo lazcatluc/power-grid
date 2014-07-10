@@ -3,50 +3,50 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-
-	<ui:repeat value="#{activePlants.activeResource}" var="activeResource"
-		varStatus="status">
-		<c:set var="currentPowerPlant"
-			value="#{activePlants.plants.get(status.index)}"></c:set>
-		<div class="wrapper">
-			<div class="image">
-				<img src="#{request.contextPath}/images/plants/#{status.index+3}.png" />
-			</div>
-			<h:form>
-				<h:outputFormat value="#{msg.powerPlantAvailableResources}">
-					<f:param value="#{currentPowerPlant.energyResources}" />
-				</h:outputFormat>
-				<br />
-				<h:panelGroup rendered="#{plantStocker.canStockPlant(currentPowerPlant)}">
-					<h:outputFormat value="#{msg.inputAvailableResources}">
-						<f:param value="#{status.index+3}" />
+	<h:panelGroup id="currentPlantsGroup">
+		<ui:repeat value="#{activePlants.activeResource}" var="activeResource"
+			varStatus="status">
+			<div class="wrapper">
+				<div class="image">
+					<img
+						src="#{request.contextPath}/images/plants/#{status.index+3}.png" />
+				</div>
+				<h:form>
+					<h:outputFormat value="#{msg.powerPlantAvailableResources}">
+						<f:param
+							value="#{activePlants.plants.get(status.index).energyResources}" />
 					</h:outputFormat>
+					<br />
+					<h:panelGroup
+						rendered="#{plantStocker.canStockPlant(activePlants.plants.get(status.index))}">
+						<h:outputFormat value="#{msg.inputAvailableResources}">
+							<f:param value="#{status.index+3}" />
+						</h:outputFormat>
 
-					<h:inputText id="inputAvailableResources"
-						value="#{activeResource.availableResources}"
-						validator="#{activePlants.plantStorageValidator(currentPowerPlant).availableResourcesValidator}"
-						validatorMessage="#{msg.plantOverStocked}" />
-					<h:message for="inputAvailableResources" />
+						<h:inputText id="inputAvailableResources"
+							value="#{activeResource.availableResources}"
+							validator="#{activePlants.plantStorageValidator(activePlants.plants.get(status.index)).availableResourcesValidator}"
+							validatorMessage="#{msg.plantOverStocked}" />
+						<h:message for="inputAvailableResources" />
 
-					<h:commandButton value="#{msg.add}">
-						<f:ajax event="click" execute="@form" render="@form"
-							listener="#{activePlants.updatePowerPlantResources(status.index)}" />
+						<h:commandButton value="#{msg.add}">
+							<f:ajax event="click" execute="@form" render="@form"
+								listener="#{activePlants.updatePowerPlantResources(status.index)}" />
+						</h:commandButton>
+
+						<h:selectOneMenu value="#{resources.chosenResourceType}">
+							<f:selectItems
+								value="#{resources.getFilteredResourceTypes(activePlants.plants.get(status.index))}" />
+						</h:selectOneMenu>
+					</h:panelGroup>
+
+					<h:commandButton value="#{msg.powerThePlant}"
+						rendered="#{plantFirer.canFirePlant(activePlants.plants.get(status.index))}">
+						<f:ajax event="click" render="@form :poweredCities"
+							listener="#{plantFirer.firePlant(activePlants.plants.get(status.index))}" />
 					</h:commandButton>
-
-					<h:selectOneMenu value="#{resources.chosenResourceType}">
-						<f:selectItems
-							value="#{resources.getFilteredResourceTypes(currentPowerPlant)}" />
-					</h:selectOneMenu>
-				</h:panelGroup>
-
-				<h:commandButton value="#{msg.powerThePlant}"
-					rendered="#{plantFirer.canFirePlant(currentPowerPlant)}">
-					<f:ajax event="click" render="@form :poweredCities"
-						listener="#{plantFirer.firePlant(currentPowerPlant)}" />
-				</h:commandButton>
-			</h:form>
-		</div>
-
-	</ui:repeat>
-
+				</h:form>
+			</div>
+		</ui:repeat>
+	</h:panelGroup>
 </ui:composition>

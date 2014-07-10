@@ -26,3 +26,13 @@ and open the template in the editor.
 .plant-card-title {
     font-size: 14px;
 }
+
+.plantsMarket {
+	position:fixed;
+	top:0;
+	right:0;
+}
+
+.plantsMarket .plant {
+	float: left;
+}

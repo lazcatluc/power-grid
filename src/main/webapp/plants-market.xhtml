@@ -1,23 +1,41 @@
-<ui:composition
-        xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:h="http://java.sun.com/jsf/html">
-    <form>
-        <h:dataTable value="#{activePlants.plants}" var="plant" border="1">
-            <h:column>
-                <f:facet name="header">Acceptable resource types</f:facet>
-                <ui:repeat value="#{plant.acceptableResourceTypes}" var="resourceType">
-                    #{resourceType}
-                </ui:repeat>
-            </h:column>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
 
-            <h:column>
-                <f:facet name="header">Base price</f:facet>
-                #{plant.basePrice}
-            </h:column>
+	<h:panelGroup id="plantsMarketForm">
+		<div class="buyable row">
+			<ui:repeat value="#{plantMarket.buyablePlants}" var="powerPlant">
+				<div class="plant">
+					<h:form rendered="#{activePlayer.canBuyPlants()}">
+						<h:commandLink>
+							<img class="buyable"
+								src="#{request.contextPath}/images/plants/#{powerPlant.basePrice}.png"
+								alt="#{powerPlant.basePrice}" />
+							<f:ajax event="click"
+								render=":plantsMarketForm :currentPlantsGroup"
+								listener="#{activePlayer.buyPlant(powerPlant)}" />
+						</h:commandLink>
+					</h:form>
+					<h:panelGroup rendered="#{!activePlayer.canBuyPlants()}">
+						<img
+							src="#{request.contextPath}/images/plants/#{powerPlant.basePrice}.png"
+							alt="#{powerPlant.basePrice}" />
+					</h:panelGroup>
+				</div>
+			</ui:repeat>
+		</div>
+		<div class="future row">
+			<ui:repeat value="#{plantMarket.futurePlants}" var="powerPlant">
+				<div class="plant">
+					<h:panelGroup>
+						<img
+							src="#{request.contextPath}/images/plants/#{powerPlant.basePrice}.png"
+							alt="#{powerPlant.basePrice}" />
+					</h:panelGroup>
+				</div>
+			</ui:repeat>
+		</div>
+	</h:panelGroup>
 
-        </h:dataTable>
-
-    </form>
 </ui:composition>

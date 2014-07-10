@@ -2,6 +2,7 @@ package ro.powergrid.integration;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Before;
@@ -84,5 +85,15 @@ public class PlayerBuysPlantFromMarketTest {
 	public void canOnlyBuyOnePlantPerPhase() throws Exception {
 		buyFirstPlant();
 		buyFirstPlant();
+	}
+	
+	@Test
+	public void canBuyOneMorePlantOnNextTurn() throws Exception {
+		buyFirstPlant();
+		turnProvider.nextTurn();
+		buyFirstPlant();
+		
+		assertEquals(Arrays.asList(PowerPlantBuilder.three(), PowerPlantBuilder.four()),
+				activePlantsMother.getActivePlants().getPlants());
 	}
 }
