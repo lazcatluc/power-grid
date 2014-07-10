@@ -17,8 +17,13 @@ import ro.powergrid.resource.ResourceType;
  *
  * @author Catalin
  */
-public class PowerPlant implements Serializable {
+public class PowerPlant implements Serializable, Comparable<PowerPlant> {
 
+
+	@Override
+	public String toString() {
+		return "Plant " + basePrice;
+	}
 
 	private static final long serialVersionUID = 1l;
 
@@ -120,5 +125,10 @@ public class PowerPlant implements Serializable {
 
 	public int getNumberOfCitiesPowered() {
 		return numberOfCitiesPowered;
+	}
+
+	@Override
+	public int compareTo(PowerPlant o) {
+		return basePrice - o.basePrice;
 	}    
 }

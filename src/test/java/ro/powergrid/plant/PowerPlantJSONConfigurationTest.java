@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-public class PowerPlantConfigurationTest {
+public class PowerPlantJSONConfigurationTest {
 
 	@Test
 	public void getsOnePlantFromJson() throws Exception {
@@ -19,17 +19,17 @@ public class PowerPlantConfigurationTest {
 					+ "\"resourceTypes\":[\"OIL\"]}]";
 		
 		ByteArrayInputStream bais = new ByteArrayInputStream(json.getBytes());
-		PowerPlantConfiguration ppc = new PowerPlantConfiguration();
+		PowerPlantJSONConfiguration ppc = new PowerPlantJSONConfiguration();
 		assertEquals(Collections.singletonMap(3, PowerPlantBuilder.three()),
 				ppc.getPlants(bais));
 	}
 	
 	@Test
 	public void getsPlantsFromConfigurationFile() throws Exception {
-		InputStream plantsStream = PowerPlantConfigurationTest.class
+		InputStream plantsStream = PowerPlantJSONConfigurationTest.class
 				.getResourceAsStream("plants.json");
 		
-		PowerPlantConfiguration ppc = new PowerPlantConfiguration();
+		PowerPlantJSONConfiguration ppc = new PowerPlantJSONConfiguration();
 		Map<Integer, PowerPlant> plants = ppc.getPlants(plantsStream);
 		
 		assertEquals(PowerPlantBuilder.thirteen(), plants.get(13));

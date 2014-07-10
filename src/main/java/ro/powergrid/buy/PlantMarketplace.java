@@ -18,4 +18,5 @@ public interface PlantMarketplace {
     Collection<PowerPlant> getFuturePlants();
     
     void removeBuyablePlant(PowerPlant plant);
+    void addPlant(PowerPlant plant);
 }

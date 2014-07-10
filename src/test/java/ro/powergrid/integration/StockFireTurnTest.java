@@ -11,6 +11,7 @@ import ro.powergrid.plant.PlantFirer;
 import ro.powergrid.plant.PlantStocker;
 import ro.powergrid.plant.PowerPlant;
 import ro.powergrid.plant.PowerPlantConfiguration;
+import ro.powergrid.plant.PowerPlantJSONConfiguration;
 import ro.powergrid.resource.ActivePlants;
 import ro.powergrid.resource.ResourceType;
 import ro.powergrid.resource.ResourceTypes;
@@ -35,7 +36,7 @@ public class StockFireTurnTest {
 		activePlants.setPowerPlantAdministrator(plantStocker);
 		resourceTypes = new ResourceTypes();
 		activePlants.setResourceTypes(resourceTypes);
-		powerPlantConfiguration = new PowerPlantConfiguration();
+		powerPlantConfiguration = new PowerPlantJSONConfiguration();
 		activePlants.setPowerPlantConfiguration(powerPlantConfiguration);
 		activePlants.init();
 	}
