@@ -1,9 +1,13 @@
 package ro.powergrid.buy;
 
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -41,6 +45,9 @@ public class SortedLayeredMarketplace implements PlantMarketplace, Serializable	
 		Iterator<PowerPlant> sortedPlantsIt =allSortedPlants.iterator();
 		extractPlants(sortedPlantsIt, buyablePlants);
 		extractPlants(sortedPlantsIt, futurePlants);
+		List<PowerPlant> rest = new ArrayList<>(allSortedPlants);	
+		Collections.shuffle(rest);
+		allPlants.addAll(rest);
 	}
 
 	private void extractPlants(Iterator<PowerPlant> sortedPlantsIt, 
@@ -63,14 +70,19 @@ public class SortedLayeredMarketplace implements PlantMarketplace, Serializable	
 
 	@Override
 	public void removeBuyablePlant(PowerPlant plant) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addPlant(PowerPlant plant) {
-		// TODO Auto-generated method stub
-		
+		buyablePlants.remove(plant);
+		PowerPlant nextPlant = getAllPlants().isEmpty()? PowerPlant.NONE : 
+			allPlants.iterator().next();
+		allPlants.remove(nextPlant);
+		PowerPlant nextFuturePlant = futurePlants.iterator().next();
+		if (nextPlant.compareTo(nextFuturePlant) < 0) {
+			buyablePlants.add(nextPlant);
+		}
+		else {
+			futurePlants.remove(nextFuturePlant);
+			futurePlants.add(nextPlant);
+			buyablePlants.add(nextFuturePlant);
+		}
 	}
 
 	public PowerPlantConfiguration getPowerPlantConfiguration() {
@@ -79,6 +91,10 @@ public class SortedLayeredMarketplace implements PlantMarketplace, Serializable	
 
 	public void setPowerPlantConfiguration(PowerPlantConfiguration powerPlantConfiguration) {
 		this.powerPlantConfiguration = powerPlantConfiguration;
+	}
+
+	public Set<PowerPlant> getAllPlants() {
+		return new LinkedHashSet<>(allPlants);
 	}
 
 }

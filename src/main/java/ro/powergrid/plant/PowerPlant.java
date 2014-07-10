@@ -7,6 +7,7 @@ package ro.powergrid.plant;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -19,7 +20,14 @@ import ro.powergrid.resource.ResourceType;
  */
 public class PowerPlant implements Serializable, Comparable<PowerPlant> {
 
-
+	public static final PowerPlant NONE  = 
+			new PowerPlant(Integer.MAX_VALUE, Integer.MAX_VALUE,
+						   0, Collections.emptySet()) {
+		private static final long serialVersionUID = 1L;
+		@Override
+		public String toString() {return "";};
+	};
+	
 	@Override
 	public String toString() {
 		return "Plant " + basePrice;
