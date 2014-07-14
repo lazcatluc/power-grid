@@ -8,8 +8,23 @@
 			varStatus="status">
 			<div class="wrapper">
 				<div class="image">
-					<img
-						src="#{request.contextPath}/images/plants/#{status.index+3}.png" />
+					<h:panelGroup rendered="#{activePlants.isPlantWaitingForScrap()}">
+						<h:form>
+							<h:commandLink>
+								<img
+									src="#{request.contextPath}/images/plants/#{activePlants.plants.get(status.index).basePrice}.png" />
+								<f:ajax event="click"
+									render=":plantsMarketForm :currentPlantsGroup"
+									listener="#{activePlants.scrapPlant(status.index)}" />
+							</h:commandLink>
+
+						</h:form>
+
+					</h:panelGroup>
+					<h:panelGroup rendered="#{!activePlants.plantWaitingForScrap}">
+						<img
+							src="#{request.contextPath}/images/plants/#{activePlants.plants.get(status.index).basePrice}.png" />
+					</h:panelGroup>
 				</div>
 				<h:form>
 					<h:outputFormat value="#{msg.powerPlantAvailableResources}">

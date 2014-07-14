@@ -15,6 +15,7 @@ import ro.powergrid.buy.TransactionalPlayerPlantBroker;
 import ro.powergrid.plant.PowerPlantBuilder;
 import ro.powergrid.player.ActivePlayer;
 import ro.powergrid.player.Player;
+import ro.powergrid.resource.ActivePlants;
 import ro.powergrid.turn.TurnProvider;
 
 public class PlayerBuysPlantFromMarketTest {
@@ -34,15 +35,19 @@ public class PlayerBuysPlantFromMarketTest {
 		activePlantsMarket.setPlantMarketplace(marketplaceMother.getMarketplace());
 		
 		activePlayer = new ActivePlayer();
-		activePlayer.setActivePlants(activePlantsMother.getActivePlants());
+		activePlayer.setActivePlants(getActivePlants());
 		activePlayer.setCurrentPlayer(new Player());
 		activePlayer.setActivePlantMarket(activePlantsMarket);
 		TransactionalPlayerPlantBroker playerPlantBroker = 
 				new TransactionalPlayerPlantBroker();
 		playerPlantBroker.setPaymentProcessor(new TransactionalPaymentProcessor());
 		activePlayer.setPlayerPlantBroker(playerPlantBroker);
-		turnProvider = activePlantsMother.getTurnProvider();
-		activePlayer.setTurnProvider(turnProvider);
+		setTurnProvider(activePlantsMother.getTurnProvider());
+		activePlayer.setTurnProvider(getTurnProvider());
+	}
+
+	public ActivePlants getActivePlants() {
+		return activePlantsMother.getActivePlants();
 	}
 
 	public void buyFirstPlant() throws InvalidPhaseActionException {
@@ -63,7 +68,15 @@ public class PlayerBuysPlantFromMarketTest {
 		buyFirstPlant();
 		
 		assertEquals(Collections.singletonList(PowerPlantBuilder.three()),
-				activePlantsMother.getActivePlants().getPlants());
+				getActivePlants().getPlants());
+	}
+	
+	@Test
+	public void playerBuysAnotherPlantUpdatesActivePlants() throws Exception {
+		activePlayer.buyPlant(activePlantsMarket.getBuyablePlants().get(2));
+		
+		assertEquals(Collections.singletonList(PowerPlantBuilder.five()),
+				getActivePlants().getPlants());
 	}
 	
 	@Test
@@ -71,12 +84,12 @@ public class PlayerBuysPlantFromMarketTest {
 		buyFirstPlant();
 		
 		assertEquals(Collections.singletonList(PowerPlantBuilder.three()),
-				activePlantsMother.getActivePlants().getPlants());
+				getActivePlants().getPlants());
 	}
 	
 	@Test(expected = InvalidPhaseActionException.class)
 	public void cannotBuyPlantOnResourcePhase() throws Exception {
-		turnProvider.nextPhase();
+		getTurnProvider().nextPhase();
 		
 		buyFirstPlant();
 	}
@@ -90,10 +103,18 @@ public class PlayerBuysPlantFromMarketTest {
 	@Test
 	public void canBuyOneMorePlantOnNextTurn() throws Exception {
 		buyFirstPlant();
-		turnProvider.nextTurn();
+		getTurnProvider().nextTurn();
 		buyFirstPlant();
 		
 		assertEquals(Arrays.asList(PowerPlantBuilder.three(), PowerPlantBuilder.four()),
-				activePlantsMother.getActivePlants().getPlants());
+				getActivePlants().getPlants());
+	}
+
+	public TurnProvider getTurnProvider() {
+		return turnProvider;
+	}
+
+	public void setTurnProvider(TurnProvider turnProvider) {
+		this.turnProvider = turnProvider;
 	}
 }

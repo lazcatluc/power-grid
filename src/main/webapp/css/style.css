@@ -8,10 +8,9 @@ and open the template in the editor.
     Author     : Catalin
 */
 .power-plant .wrapper {
-    border: 1px solid green;
     width: 332px;
     height: 166px;
-    margin-bottom: 20px;    
+    margin-bottom: 5px;    
 }
 
 .power-plant input[type="text"] {
@@ -35,4 +34,13 @@ and open the template in the editor.
 
 .plantsMarket .plant {
 	float: left;
+	padding: 1px;
+}
+
+.plant a, .power-plant a {
+	float: left;
+}
+
+.plant a:hover, .power-plant a:hover, a.selected {
+	box-shadow: 0px 0px 10px 0px black;
 }

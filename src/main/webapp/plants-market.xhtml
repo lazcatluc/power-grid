@@ -8,7 +8,8 @@
 			<ui:repeat value="#{plantMarket.buyablePlants}" var="powerPlant">
 				<div class="plant">
 					<h:form rendered="#{activePlayer.canBuyPlants()}">
-						<h:commandLink>
+						<h:commandLink
+							styleClass="#{(activePlants.waitingForScrap == powerPlant) ? 'selected' : ''}">
 							<img class="buyable"
 								src="#{request.contextPath}/images/plants/#{powerPlant.basePrice}.png"
 								alt="#{powerPlant.basePrice}" />
@@ -36,6 +37,13 @@
 				</div>
 			</ui:repeat>
 		</div>
+		<h:panelGroup rendered="#{activePlants.isPlantWaitingForScrap()}">
+			<div class="waiting row">
+				<img class="selected"
+					src="#{request.contextPath}/images/plants/#{activePlants.waitingForScrap.basePrice}.png"
+					alt="#{activePlants.waitingForScrap.basePrice}" />
+			</div>
+		</h:panelGroup>
 	</h:panelGroup>
 
 </ui:composition>
