@@ -10,8 +10,25 @@ public interface Country extends Serializable {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public Distance getDistance(City city, City anotherCity) {
-			return Distance.ZERO;
+		public CityDistance getDistance(City city, Collection<City> previousCities) {
+			return new CityDistance() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public Number getDistance() {
+					return Double.POSITIVE_INFINITY;
+				}
+
+				@Override
+				public City getStartCity() {
+					return city;
+				}
+
+				@Override
+				public City getEndCity() {
+					return City.NOWHERESVILLE;
+				}
+			};
 		}
 
 		@Override
@@ -20,6 +37,6 @@ public interface Country extends Serializable {
 		}
 	};
 	
-	Distance getDistance(City city, City anotherCity);
+	CityDistance getDistance(City city, Collection<City> previousCities);
 	Collection<City> getCities();
 }

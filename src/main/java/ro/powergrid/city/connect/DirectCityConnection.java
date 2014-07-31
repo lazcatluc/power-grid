@@ -1,4 +1,7 @@
-package ro.powergrid.city;
+package ro.powergrid.city.connect;
+
+import ro.powergrid.city.City;
+import ro.powergrid.city.CityDistance;
 
 public class DirectCityConnection extends DirectConnection implements CityDistance {
 	

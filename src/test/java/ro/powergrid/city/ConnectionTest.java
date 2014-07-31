@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import ro.powergrid.city.connect.Connection;
+import ro.powergrid.city.connect.DirectConnection;
+
 public class ConnectionTest {
 
 	@Test

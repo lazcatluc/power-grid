@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import ro.powergrid.city.connect.CityDistanceFactory;
+
 public class CityConnectionTest {
 
 	@Test

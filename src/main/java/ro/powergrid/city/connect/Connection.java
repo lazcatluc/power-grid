@@ -1,7 +1,9 @@
-package ro.powergrid.city;
+package ro.powergrid.city.connect;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import ro.powergrid.city.Distance;
 
 public class Connection implements Distance {
 

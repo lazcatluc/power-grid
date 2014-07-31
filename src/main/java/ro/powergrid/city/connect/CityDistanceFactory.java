@@ -1,8 +1,11 @@
-package ro.powergrid.city;
+package ro.powergrid.city.connect;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import ro.powergrid.city.City;
+import ro.powergrid.city.CityDistance;
 
 public class CityDistanceFactory {
 	private City startCity = City.NOWHERESVILLE;
