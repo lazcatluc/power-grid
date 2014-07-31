@@ -27,11 +27,10 @@ public class DijsktraCountryTest {
 	public void distanceOneIfCityIsTheOnlyNeighbor() throws Exception {
 		City expectedCity = new CityBuilder().withName("Expected").build();
 		int expectedDistance = 1;
-		DijkstraCountry country = new DijkstraCountry(Arrays.asList(
-				new ConnectedCity(City.NOWHERESVILLE, Collections.singletonMap(
-						expectedDistance, expectedCity)),
-				new ConnectedCity(expectedCity, Collections.singletonMap(
-						expectedDistance, City.NOWHERESVILLE))));
+		DijkstraCountry country = new DijkstraCountry(
+				new SymmetricConnectedCitiesBuilder().withDirectCityConnection(
+						new DirectCityConnection(expectedDistance,
+								City.NOWHERESVILLE, expectedCity)).build());
 
 		assertEquals(
 				expectedDistance,
