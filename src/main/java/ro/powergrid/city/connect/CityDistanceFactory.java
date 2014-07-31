@@ -59,4 +59,8 @@ public class CityDistanceFactory {
 				intermediateCities.get(intermediateCities.size()-1),endCity));
 		return new CityConnection(directConnections);
 	}
+	
+	public static CityDistance self(City city) {
+		return new SelfCityConnection(city);
+	}
 }
