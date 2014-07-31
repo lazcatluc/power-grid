@@ -1,6 +1,6 @@
 package ro.powergrid.city;
 
-public class DirectCityConnection extends DirectConnection {
+public class DirectCityConnection extends DirectConnection implements CityDistance {
 	
 	public static final DirectCityConnection CIRCULAR_NOWHERE = 
 			new DirectCityConnection(0, City.NOWHERESVILLE, City.NOWHERESVILLE);

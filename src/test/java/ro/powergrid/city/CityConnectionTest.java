@@ -8,25 +8,29 @@ public class CityConnectionTest {
 
 	@Test
 	public void connectionHasInitialCity() throws Exception {
-		CityConnection connection = new CityConnection (
-				new DirectCityConnection(1, 
-						new CityBuilder().withName("First").build(),
-						City.NOWHERESVILLE),
-				DirectCityConnection.CIRCULAR_NOWHERE		
-			);
+		String expectedName = "First";
+		CityDistance connection = intermediateCityFactory()
+			.withStartCity(namedCity(expectedName))
+			.make();
 		
-		assertEquals("First", connection.getStartCity().getName());
+		assertEquals(expectedName, connection.getStartCity().getName());
 	}
 	
 	@Test
 	public void connectionHasFinalCity() throws Exception {
-		CityConnection connection = new CityConnection (
-				DirectCityConnection.CIRCULAR_NOWHERE,
-				new DirectCityConnection(1, 
-						City.NOWHERESVILLE,
-						new CityBuilder().withName("Last").build())
-			);
+		String expectedName = "Last";
+		CityDistance connection = intermediateCityFactory()
+			.withEndCity(namedCity(expectedName))
+			.make();
 		
-		assertEquals("Last", connection.getEndCity().getName());
+		assertEquals(expectedName, connection.getEndCity().getName());
+	}
+
+	public City namedCity(String expectedName) {
+		return new CityBuilder().withName(expectedName).build();
+	}
+
+	public CityDistanceFactory intermediateCityFactory() {
+		return new CityDistanceFactory().withCity(City.NOWHERESVILLE);
 	}
 }

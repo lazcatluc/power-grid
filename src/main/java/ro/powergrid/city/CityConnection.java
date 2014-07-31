@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class CityConnection extends Connection {
+public class CityConnection extends Connection implements CityDistance {
 
 	private static final long serialVersionUID = 1L;
 	private final City startCity;
