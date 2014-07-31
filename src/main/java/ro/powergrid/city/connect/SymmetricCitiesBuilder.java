@@ -9,18 +9,22 @@ import java.util.TreeSet;
 
 import ro.powergrid.city.City;
 
-public class SymmetricConnectedCitiesBuilder {
+public class SymmetricCitiesBuilder {
 	public Map<City, NavigableSet<DirectCityConnection>> connections = new HashMap<>();
 
-	public SymmetricConnectedCitiesBuilder withDirectCityConnection(
+	public SymmetricCitiesBuilder withDirectCityConnection(
 			DirectCityConnection connection) {
-		
-		initializedCityConnections(connection.getStartCity())
-			.add(connection);
-		initializedCityConnections(connection.getEndCity())
-			.add(reverse(connection));
-		
+
+		initializedCityConnections(connection.getStartCity()).add(connection);
+		initializedCityConnections(connection.getEndCity()).add(
+				reverse(connection));
+
 		return this;
+	}
+
+	public SymmetricCitiesBuilder withDirectCityConnection(Number distance,
+			City startCity, City endCity) {
+		return withDirectCityConnection(new DirectCityConnection(distance, startCity, endCity));
 	}
 
 	public DirectCityConnection reverse(DirectCityConnection original) {
@@ -38,12 +42,13 @@ public class SymmetricConnectedCitiesBuilder {
 		}
 		return cityConnections;
 	}
-	
+
 	public Collection<ConnectedCity> build() {
 		Collection<ConnectedCity> connectedCities = new HashSet<>();
-		for (Map.Entry<City, NavigableSet<DirectCityConnection>> entry :
-				connections.entrySet()) {
-			connectedCities.add(new ConnectedCity(entry.getKey(), entry.getValue()));
+		for (Map.Entry<City, NavigableSet<DirectCityConnection>> entry : connections
+				.entrySet()) {
+			connectedCities.add(new ConnectedCity(entry.getKey(), entry
+					.getValue()));
 		}
 		return connectedCities;
 	}

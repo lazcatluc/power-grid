@@ -28,9 +28,9 @@ public class DijsktraCountryTest {
 		City expectedCity = new CityBuilder().withName("Expected").build();
 		int expectedDistance = 1;
 		DijkstraCountry country = new DijkstraCountry(
-				new SymmetricConnectedCitiesBuilder().withDirectCityConnection(
-						new DirectCityConnection(expectedDistance,
-								City.NOWHERESVILLE, expectedCity)).build());
+				new SymmetricCitiesBuilder().withDirectCityConnection(
+						expectedDistance, City.NOWHERESVILLE, expectedCity)
+						.build());
 
 		assertEquals(
 				expectedDistance,
