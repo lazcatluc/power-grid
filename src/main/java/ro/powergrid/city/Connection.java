@@ -9,7 +9,7 @@ public class Connection implements Distance {
 	
 	private final int distance;
 	
-	public Connection(Collection<Distance> distances) {
+	public Connection(Collection<? extends Distance> distances) {
 		int d = 0;
 		for (Distance distance : distances) {
 			d += distance.getDistance().intValue();
@@ -26,4 +26,27 @@ public class Connection implements Distance {
 		return distance;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + distance;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Connection other = (Connection) obj;
+		if (distance != other.distance)
+			return false;
+		return true;
+	}
+
+	
 }

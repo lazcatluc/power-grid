@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class City implements Serializable {
+	
+	public static final City NOWHERESVILLE = 
+			new City("NOWHERESVILLE", Country.NOWHERELAND, Location.NOWHERE);
 
 	private static final long serialVersionUID = 1L;
 	
@@ -55,6 +58,10 @@ public class City implements Serializable {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	public String getName() {
+		return name;
 	}
 	
 }
