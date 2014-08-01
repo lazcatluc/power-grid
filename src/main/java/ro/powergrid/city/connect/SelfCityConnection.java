@@ -28,29 +28,4 @@ public class SelfCityConnection implements CityDistance {
 		return myCity;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((myCity == null) ? 0 : myCity.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SelfCityConnection other = (SelfCityConnection) obj;
-		if (myCity == null) {
-			if (other.myCity != null)
-				return false;
-		} else if (!myCity.equals(other.myCity))
-			return false;
-		return true;
-	}
-
 }

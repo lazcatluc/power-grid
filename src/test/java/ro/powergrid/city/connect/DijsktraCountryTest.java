@@ -1,6 +1,6 @@
 package ro.powergrid.city.connect;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.Collections;
 
@@ -16,9 +16,8 @@ public class DijsktraCountryTest {
 	public void distanceZeroIfCityIsOwned() throws Exception {
 		DijkstraCountry country = new DijkstraCountry(Collections.emptySet());
 
-		assertEquals(
-				0,
-				distance(country,City.NOWHERESVILLE,City.NOWHERESVILLE));
+		assertEquals(0,
+				distance(country, City.NOWHERESVILLE, City.NOWHERESVILLE));
 	}
 
 	@Test
@@ -26,12 +25,10 @@ public class DijsktraCountryTest {
 		City targetCity = new CityBuilder().withName("Target").build();
 
 		DijkstraCountry country = new DijkstraCountry(
-				new SymmetricCitiesBuilder().touching(
-						City.NOWHERESVILLE, targetCity).build());
+				new SymmetricCitiesBuilder().touching(City.NOWHERESVILLE,
+						targetCity).build());
 
-		assertEquals(
-				1,
-				distance(country,targetCity,City.NOWHERESVILLE));
+		assertEquals(1, distance(country, targetCity, City.NOWHERESVILLE));
 	}
 
 	@Test
@@ -46,7 +43,29 @@ public class DijsktraCountryTest {
 
 		assertEquals(2, distance(country, one, three));
 	}
+
+	@Test
+	public void infiniteDistanceForCityNotInCountry() throws Exception {
+		City one = CityBuilder.named("1");
+
+		Country country = new DijkstraCountry(new SymmetricCitiesBuilder()
+				.touching(City.NOWHERESVILLE, City.NOWHERESVILLE).build());
+
+		assertTrue(((Double) distance(country, City.NOWHERESVILLE, one))
+				.isInfinite());
+	}
 	
+	@Test
+	public void infiniteDistanceForDestinationNotInCountry() throws Exception {
+		City one = CityBuilder.named("1");
+
+		Country country = new DijkstraCountry(new SymmetricCitiesBuilder()
+				.touching(City.NOWHERESVILLE, City.NOWHERESVILLE).build());
+
+		assertTrue(((Double) distance(country, one, City.NOWHERESVILLE))
+				.isInfinite());
+	}
+
 	@Test
 	public void distanceForThreeAlternateRoutesIsMinimum() throws Exception {
 		City start = CityBuilder.named("Start");
@@ -56,39 +75,36 @@ public class DijsktraCountryTest {
 		City end = CityBuilder.named("End");
 
 		DijkstraCountry country = new DijkstraCountry(
-				new SymmetricCitiesBuilder()
-						.touching(start, one)
-						.touching(start, two)
-						.touching(start, three)
+				new SymmetricCitiesBuilder().touching(start, one)
+						.touching(start, two).touching(start, three)
 						.touching(one, end)
 						.withDirectCityConnection(2, two, end)
-						.withDirectCityConnection(3, three, end)
-							.build());
+						.withDirectCityConnection(3, three, end).build());
 
 		assertEquals(2, distance(country, start, end));
 	}
-	
+
 	@Test
 	public void findsDistanceWith10000Hops() throws Exception {
 		City start = CityBuilder.named("Start");
 		City end = CityBuilder.named("End");
 		SymmetricCitiesBuilder builder = new SymmetricCitiesBuilder();
 		City current = start;
-				
+
 		for (int i = 0; i < 10000; i++) {
 			City newCity = CityBuilder.named(String.valueOf(i));
 			builder.touching(current, newCity);
 			current = newCity;
 		}
-		
-		DijkstraCountry country = new DijkstraCountry(
-				builder.touching(current, end).build());
-		
+
+		DijkstraCountry country = new DijkstraCountry(builder.touching(current,
+				end).build());
+
 		assertEquals(10001, distance(country, start, end));
 	}
-	
+
 	protected Number distance(Country country, City source, City destination) {
-		return country.getDistance(source, 
-				Collections.singleton(destination)).getDistance();
+		return country.getDistance(source, Collections.singleton(destination))
+				.getDistance();
 	}
 }

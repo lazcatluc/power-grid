@@ -29,14 +29,6 @@ public class CityDistanceFactory {
 		distances.add(allDistances);
 		return this;
 	}
-	
-	public CityDistanceFactory withAllDistances(int allDistances) {
-		this.allDistances = allDistances;
-		for (int i = 0; i < distances.size(); i++) {
-			distances.set(i, allDistances);
-		}
-		return this;
-	}
 
 	public CityDistanceFactory withDistance(Number distance) {
 		distances.set(distances.size() - 1, distance);
@@ -60,7 +52,4 @@ public class CityDistanceFactory {
 		return new CityConnection(directConnections);
 	}
 	
-	public static CityDistance self(City city) {
-		return new SelfCityConnection(city);
-	}
 }

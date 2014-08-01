@@ -30,6 +30,9 @@ public class DijkstraCountry implements Country {
 		if (previousCities.contains(city)) {
 			return new SelfCityConnection(city);
 		}
+		if (!cityMap.containsKey(city)) {
+			return Country.NOWHERELAND.getDistance(city, previousCities);
+		}
 		TreeSet<CityDistance> distances = new TreeSet<>();
 		distances.addAll(cityMap.get(city).getConnections());
 		Collection<City> unvisitedCountryCities = new HashSet<>(getCities());
