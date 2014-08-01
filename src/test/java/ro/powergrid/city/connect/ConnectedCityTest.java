@@ -32,10 +32,6 @@ public class ConnectedCityTest {
 		assertAddedRandomlyPreservesOrder(one, two, three);
 	}
 
-	public CityDistanceFactory factory() {
-		return new CityDistanceFactory();
-	}
-
 	@Test
 	public void ordersConnectionsOnStartCity() throws Exception {
 		CityDistance one = connectionWith(
@@ -58,6 +54,10 @@ public class ConnectedCityTest {
 				factory()::withEndCity, this::namedCity, "3");
 
 		assertAddedRandomlyPreservesOrder(one, two, three);
+	}
+	
+	public CityDistanceFactory factory() {
+		return new CityDistanceFactory();
 	}
 
 	protected void assertAddedRandomlyPreservesOrder(CityDistance one,

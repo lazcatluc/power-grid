@@ -14,14 +14,14 @@ public class CityConnection extends Connection implements CityDistance {
 	private final City startCity;
 	private final City endCity;
 
-	public CityConnection(Collection<? extends DirectCityConnection> distances) {
+	public CityConnection(Collection<? extends CityDistance> distances) {
 		super(distances);
-		List<? extends DirectCityConnection>  myDistances = new ArrayList<>(distances);
+		List<? extends CityDistance>  myDistances = new ArrayList<>(distances);
 		startCity = myDistances.get(0).getStartCity();
 		endCity = myDistances.get(myDistances.size()-1).getEndCity();
 	}
 	
-	public CityConnection(DirectCityConnection... distances) {
+	public CityConnection(CityDistance... distances) {
 		this(Arrays.asList(distances));
 	}
 

@@ -3,6 +3,7 @@ package ro.powergrid.city.connect;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -29,13 +30,29 @@ public class DijkstraCountry implements Country {
 		if (previousCities.contains(city)) {
 			return new SelfCityConnection(city);
 		}
-		TreeSet<? extends CityDistance> distances = new TreeSet<>(cityMap.get(
-				city).getConnections());
-		CityDistance first = distances.first();
-		if (previousCities.contains(first.getEndCity())) {
-			return first;
+		TreeSet<CityDistance> distances = new TreeSet<>();
+		distances.addAll(cityMap.get(city).getConnections());
+		Collection<City> unvisitedCountryCities = new HashSet<>(getCities());
+		unvisitedCountryCities.remove(city);
+		while (!distances.isEmpty()) {
+			CityDistance first = distances.first();
+			if (previousCities.contains(first.getEndCity())) {
+				return first;
+			}
+			unvisitedCountryCities.remove(first.getEndCity());
+			distances.remove(first);
+			TreeSet<? extends DirectCityConnection> neighborDistances = new TreeSet<>(
+					cityMap.get(first.getEndCity()).getConnections());
+			for (DirectCityConnection neighborDistance : neighborDistances) {
+				if (!unvisitedCountryCities.contains(neighborDistance.getEndCity())) {
+					continue;
+				}
+				CityConnection alternateRoute = new CityConnection(first,
+						neighborDistance);
+				distances.add(alternateRoute);
+			}
 		}
-		return null;
+		return Country.NOWHERELAND.getDistance(city, previousCities);
 	}
 
 	@Override

@@ -25,4 +25,7 @@ public class CityBuilder {
 		return new City(name, country, location);
 	}
 
+	public static City named(String name) {
+		return new CityBuilder().withName(name).build();
+	}
 }

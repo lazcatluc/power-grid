@@ -26,6 +26,11 @@ public class SymmetricCitiesBuilder {
 			City startCity, City endCity) {
 		return withDirectCityConnection(new DirectCityConnection(distance, startCity, endCity));
 	}
+	
+	public SymmetricCitiesBuilder touching(
+			City startCity, City endCity) {
+		return withDirectCityConnection(new DirectCityConnection(1, startCity, endCity));
+	}
 
 	public DirectCityConnection reverse(DirectCityConnection original) {
 		return new DirectCityConnection(original.getDistance(),
