@@ -2,7 +2,6 @@ package ro.powergrid.city.connect;
 
 import ro.powergrid.city.City;
 import ro.powergrid.city.CityDistance;
-import ro.powergrid.city.Distance;
 
 public class DirectCityConnection extends DirectConnection implements
 		CityDistance {
@@ -61,24 +60,5 @@ public class DirectCityConnection extends DirectConnection implements
 		return endCity;
 	}
 
-	@Override
-	public int compareTo(Distance o) {
-		int actualDistance = super.compareTo(o);
-		if (actualDistance != 0) {
-			return actualDistance;
-		}
-		if (!(o instanceof DirectCityConnection)) {
-			// prefer a direct connections when sorting when one is available
-			return -1;
-		}
-		DirectCityConnection other = (DirectCityConnection) o;
-		int startCityCompare = this.getStartCity().getName()
-				.compareTo(other.getStartCity().getName());
-		if (startCityCompare != 0) {
-			return startCityCompare;
-		}
-		return this.getEndCity().getName()
-				.compareTo(other.getEndCity().getName());
-	}
 
 }
