@@ -47,6 +47,46 @@ public class DijsktraCountryTest {
 		assertEquals(2, distance(country, one, three));
 	}
 	
+	@Test
+	public void distanceForThreeAlternateRoutesIsMinimum() throws Exception {
+		City start = CityBuilder.named("Start");
+		City one = CityBuilder.named("1");
+		City two = CityBuilder.named("2");
+		City three = CityBuilder.named("3");
+		City end = CityBuilder.named("End");
+
+		DijkstraCountry country = new DijkstraCountry(
+				new SymmetricCitiesBuilder()
+						.touching(start, one)
+						.touching(start, two)
+						.touching(start, three)
+						.touching(one, end)
+						.withDirectCityConnection(2, two, end)
+						.withDirectCityConnection(3, three, end)
+							.build());
+
+		assertEquals(2, distance(country, start, end));
+	}
+	
+	@Test
+	public void findsDistanceWith10000Hops() throws Exception {
+		City start = CityBuilder.named("Start");
+		City end = CityBuilder.named("End");
+		SymmetricCitiesBuilder builder = new SymmetricCitiesBuilder();
+		City current = start;
+				
+		for (int i = 0; i < 10000; i++) {
+			City newCity = CityBuilder.named(String.valueOf(i));
+			builder.touching(current, newCity);
+			current = newCity;
+		}
+		
+		DijkstraCountry country = new DijkstraCountry(
+				builder.touching(current, end).build());
+		
+		assertEquals(10001, distance(country, start, end));
+	}
+	
 	protected Number distance(Country country, City source, City destination) {
 		return country.getDistance(source, 
 				Collections.singleton(destination)).getDistance();

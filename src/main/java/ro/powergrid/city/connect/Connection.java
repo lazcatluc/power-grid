@@ -8,15 +8,27 @@ import ro.powergrid.city.Distance;
 public class Connection implements Distance {
 
 	private static final long serialVersionUID = 1L;
+	private static final double EPSILON = 0.0001d;
 	
-	private final int distance;
+	private final Number distance;
 	
 	public Connection(Collection<? extends Distance> distances) {
-		int d = 0;
+		double d = 0;
 		for (Distance distance : distances) {
-			d += distance.getDistance().intValue();
+			d += distance.getDistance().doubleValue();
 		}
-		distance = d;
+		long rounded = Math.round(d);
+		if (Math.abs(rounded - d) < EPSILON) {
+			if (rounded <= Integer.MAX_VALUE && rounded >= Integer.MIN_VALUE) {
+				distance = (int) rounded;
+			}
+			else {
+				distance = rounded;
+			}
+		}
+		else {
+			distance = d;
+		}
 	}
 	
 	public Connection(Distance... distances) {
@@ -32,7 +44,7 @@ public class Connection implements Distance {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + distance;
+		result = prime * result + distance.intValue();
 		return result;
 	}
 
