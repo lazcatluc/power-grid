@@ -10,7 +10,7 @@ import java.util.TreeSet;
 import ro.powergrid.city.City;
 
 public class SymmetricCitiesBuilder {
-	public Map<City, NavigableSet<DirectCityConnection>> connections = new HashMap<>();
+	private Map<City, NavigableSet<DirectCityConnection>> connections = new HashMap<>();
 
 	public SymmetricCitiesBuilder withDirectCityConnection(
 			DirectCityConnection connection) {

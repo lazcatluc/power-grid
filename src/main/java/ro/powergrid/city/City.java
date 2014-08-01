@@ -56,5 +56,13 @@ public class City implements Serializable {
 	public String getName() {
 		return name;
 	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public List<CityOccupier> getOccupiers() {
+		return new ArrayList<>(occupiers);
+	}
 	
 }
