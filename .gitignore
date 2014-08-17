@@ -37,3 +37,4 @@ target/
 hs_err_pid*
 META-INF/
 bin/
+/bin/
