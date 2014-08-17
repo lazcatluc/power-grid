@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -47,22 +48,24 @@ public class PowerPlantJSONConfiguration implements Serializable, PowerPlantConf
 		Map<Integer, PowerPlant> plants = new HashMap<>();
 		JsonReader reader = Json.createReader(is);
 		JsonArray plantsArray = reader.readArray();
-		for (JsonValue jsonValue : plantsArray) {
-			JsonObject plantObject = (JsonObject)jsonValue;
-			PowerPlantBuilder builder = new PowerPlantBuilder()
-				.withBasePrice(plantObject.getInt("basePrice"))
-				.withNecessaryResources(plantObject.getInt("necessaryResources"))
-				.withNumberOfCitiesPowered(plantObject.getInt("numberOfCitiesPowered"));
-			JsonArray resources = plantObject.getJsonArray("resourceTypes");
-			for (JsonValue resource : resources) {
-				JsonString string = (JsonString)resource;
-				ResourceType resourceType = ResourceType.valueOf(
-						string.getString().toUpperCase());
-				builder.withResourceType(resourceType);
-			}
-			PowerPlant plant = builder.build();
-			plants.put(plant.getBasePrice(), plant);
-		}
+		plantsArray.stream().map(this::parsePlantObject)
+			.forEach(plant -> plants.put(plant.getBasePrice(), plant));
+		
 		return plants;
+	}
+	
+	private PowerPlant parsePlantObject(JsonValue jsonValue) {
+		JsonObject plantObject = (JsonObject)jsonValue;
+		PowerPlantBuilder builder = new PowerPlantBuilder()
+			.withBasePrice(plantObject.getInt("basePrice"))
+			.withNecessaryResources(plantObject.getInt("necessaryResources"))
+			.withNumberOfCitiesPowered(plantObject.getInt("numberOfCitiesPowered"));
+		plantObject.getJsonArray("resourceTypes").stream()
+				.map(resource -> (JsonString)resource).map(JsonString::getString).map(String::toUpperCase)
+				.map(upperString -> ResourceType.valueOf(upperString))
+				.forEach(resourceType -> builder.withResourceType(resourceType));
+		
+		PowerPlant plant = builder.build();
+		return plant;
 	}
 }
